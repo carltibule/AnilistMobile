@@ -18,6 +18,5 @@ public class MainActivity extends AppCompatActivity {
 
         OkHttpClient okHttpClient = new OkHttpClient.Builder().build();
         ApolloClient apolloClient = ApolloClient.builder().serverUrl(ANILIST_API_URL).okHttpClient(okHttpClient).build();
-
     }
 }

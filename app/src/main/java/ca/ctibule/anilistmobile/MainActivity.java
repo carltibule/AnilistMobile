@@ -54,10 +54,13 @@ public class MainActivity extends AppCompatActivity {
                 .okHttpClient(okHttpClient)
                 .addCustomTypeAdapter(CustomType.COUNTRYCODE, countryCodeAdapter)
                 .build();
-        apolloClient.query(MediaQuery.builder().year(2018).season(MediaSeason.WINTER).page(1).build()).enqueue(new ApolloCall.Callback<MediaQuery.Data>() {
+        apolloClient.query(MediaQuery.builder().year(2018).season(MediaSeason.FALL).page(1).build()).enqueue(new ApolloCall.Callback<MediaQuery.Data>() {
             @Override
             public void onResponse(@NotNull Response<MediaQuery.Data> response) {
-                Log.d("GraphQL", "Success");
+                for(MediaQuery.Medium medium : response.data().Page().media()){
+                    Log.d("GraphQL", medium.title().romaji());
+                    Log.d("GraphQL", medium.description());
+                }
             }
 
             @Override

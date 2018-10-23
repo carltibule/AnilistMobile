@@ -9,10 +9,16 @@ import com.apollographql.apollo.ApolloCall;
 import com.apollographql.apollo.ApolloClient;
 import com.apollographql.apollo.api.Response;
 import com.apollographql.apollo.exception.ApolloException;
+import com.apollographql.apollo.exception.ApolloParseException;
+import com.apollographql.apollo.response.CustomTypeAdapter;
+import com.apollographql.apollo.response.CustomTypeValue;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.ParseException;
+
 import ca.ctibule.AnilistMobile.MediaQuery;
+import ca.ctibule.AnilistMobile.type.CustomType;
 import ca.ctibule.AnilistMobile.type.MediaSeason;
 import okhttp3.OkHttpClient;
 
@@ -25,20 +31,38 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        OkHttpClient okHttpClient = new OkHttpClient.Builder().build();
-        ApolloClient apolloClient = ApolloClient.builder().serverUrl(ANILIST_API_URL).okHttpClient(okHttpClient).build();
+        CustomTypeAdapter<String> countryCodeAdapter = new CustomTypeAdapter<String>() {
+            @Override
+            public String decode(@NotNull CustomTypeValue value) {
+                try {
+                    return value.value.toString();
+                }
+                catch (Exception e){
+                    throw e;
+                }
+            }
 
-        apolloClient.query(
-                MediaQuery.builder().page(1).season(MediaSeason.WINTER).year(2018).build()
-        ).enqueue(new ApolloCall.Callback<MediaQuery.Data>() {
+            @NotNull
+            @Override
+            public CustomTypeValue encode(@NotNull String value) {
+                return new CustomTypeValue.GraphQLString(value);
+            }
+        };
+
+        OkHttpClient okHttpClient = new OkHttpClient.Builder().build();
+        ApolloClient apolloClient = ApolloClient.builder().serverUrl(ANILIST_API_URL)
+                .okHttpClient(okHttpClient)
+                .addCustomTypeAdapter(CustomType.COUNTRYCODE, countryCodeAdapter)
+                .build();
+        apolloClient.query(MediaQuery.builder().year(2018).season(MediaSeason.WINTER).page(1).build()).enqueue(new ApolloCall.Callback<MediaQuery.Data>() {
             @Override
             public void onResponse(@NotNull Response<MediaQuery.Data> response) {
-                Log.d("GraphQL", response.toString());
+                Log.d("GraphQL", "Success");
             }
 
             @Override
             public void onFailure(@NotNull ApolloException e) {
-                Log.d("GraphQL", e.getMessage());
+                Log.d("GraphQL", "Failure " + e.getMessage());
             }
         });
     }

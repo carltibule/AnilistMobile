@@ -1,5 +1,6 @@
 package ca.ctibule.anilistmobile;
 
+import android.os.AsyncTask;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 import ca.ctibule.AnilistMobile.MediaQuery;
 import ca.ctibule.AnilistMobile.type.CustomType;
@@ -36,72 +38,18 @@ public class MainActivity extends AppCompatActivity {
 
         // Instantiate necesary variables;
         mediaList = new ArrayList<AnilistMedia>();
-        hasNextPage = false;
+        hasNextPage = true;
 
-        CustomTypeAdapter<String> countryCodeAdapter = new CustomTypeAdapter<String>() {
-            @Override
-            public String decode(@NotNull CustomTypeValue value) {
-                try {
-                    return value.value.toString();
-                }
-                catch (Exception e){
-                    throw e;
-                }
-            }
-
-            @NotNull
-            @Override
-            public CustomTypeValue encode(@NotNull String value) {
-                return new CustomTypeValue.GraphQLString(value);
-            }
-        };
-
-        OkHttpClient okHttpClient = new OkHttpClient.Builder().build();
-        ApolloClient apolloClient = ApolloClient.builder().serverUrl(ANILIST_API_URL)
-                .okHttpClient(okHttpClient)
-                .addCustomTypeAdapter(CustomType.COUNTRYCODE, countryCodeAdapter)
-                .build();
-
-        // Retrieve media from Anilist API
-        getMediaFromAnilistAPI(apolloClient, 2018, MediaSeason.WINTER, 1);
-
-        for(AnilistMedia media: mediaList){
-            Log.d("GraphQL", "Anilist ID: " + String.valueOf(media.getAnilistId()));
-            Log.d("GraphQL", "MAL ID: " + String.valueOf(media.getMalId()));
-            Log.d("GraphQL", "Romaji: " + media.getRomajiTitle());
-            Log.d("GraphQL", "English: " + media.getEnglishTitle());
-            Log.d("GraphQL", "Native: " + media.getNativeTitle());
-            Log.d("GraphQL", "MediaType: " + media.getMediaType().rawValue());
-            Log.d("GraphQL", "MediaFormat: " + media.getMediaFormat().rawValue());
-            Log.d("GraphQL", "MediaStatus: " + media.getMediaStatus().rawValue());
-            Log.d("GraphQL", "Description: " + media.getDescription());
-            Log.d("GraphQL", "StartDate: " + media.getStartDate());
-            Log.d("GraphQL", "EndDate: " + media.getEndDate());
-            Log.d("GraphQL", "Season: " + media.getMediaSeason().rawValue());
-            Log.d("GraphQL", "Episodes: " + media.getEpisodes());
-            Log.d("GraphQL", "Duration: " + media.getDuration());
-            Log.d("GraphQL", "Chapters: " + media.getChapters());
-            Log.d("GraphQL", "Volumes: " + media.getVolumes());
-            Log.d("GraphQL", "CountryOfOrigin: " + media.getCountryOfOrigin());
-            Log.d("GraphQL", "IsLicensed: " + media.isLicensed());
-            Log.d("GraphQL", "Source: " + media.getMediaSource().rawValue());
-            Log.d("GraphQL", "Hashtag: " + media.getHashtag());
-            Log.d("GraphQL", "TrailerID: " + media.getTrailerId());
-            Log.d("GraphQL", "UpdatedAt: " + media.getUpdatedAt());
-            Log.d("GraphQL", "LargeCoverImage: " + media.getLargeCoverImage());
-            Log.d("GraphQL", "MediumCoverImage: " + media.getMediumCoverImage());
-            Log.d("GraphQL", "BannerImage: " + media.getBannerImage());
-            Log.d("GraphQL", "AverageScore: " + media.getAverageScore());
-            Log.d("GraphQL", "MeanScore: " + media.getMeanScore());
-            Log.d("GraphQL", "IsAdult: " + media.isAdult());
-            Log.d("GraphQL", "--------------------------------------------------");
-        }
+        QueryAnilistAPITask queryAnilistAPITask = new QueryAnilistAPITask();
+        queryAnilistAPITask.execute();
     }
 
     private void getMediaFromAnilistAPI(ApolloClient apolloClient, int year, MediaSeason season, int page){
         apolloClient.query(MediaQuery.builder().year(year).season(season).page(page).build()).enqueue(new ApolloCall.Callback<MediaQuery.Data>() {
             @Override
             public void onResponse(@NotNull Response<MediaQuery.Data> response) {
+                hasNextPage = response.data().Page().pageInfo().hasNextPage();
+
                 for(MediaQuery.Medium medium : response.data().Page().media()){
                     AnilistMedia anilistMedia = new AnilistMedia();
 
@@ -224,5 +172,53 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("GraphQL", "Failure " + e.getMessage());
             }
         });
+    }
+
+    private class QueryAnilistAPITask extends AsyncTask<Void, Void, Void>{
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try{
+                CustomTypeAdapter<String> countryCodeAdapter = new CustomTypeAdapter<String>() {
+                    @Override
+                    public String decode(@NotNull CustomTypeValue value) {
+                        try {
+                            return value.value.toString();
+                        }
+                        catch (Exception e){
+                            throw e;
+                        }
+                    }
+
+                    @NotNull
+                    @Override
+                    public CustomTypeValue encode(@NotNull String value) {
+                        return new CustomTypeValue.GraphQLString(value);
+                    }
+                };
+
+                OkHttpClient okHttpClient = new OkHttpClient.Builder().build();
+                ApolloClient apolloClient = ApolloClient.builder().serverUrl(ANILIST_API_URL)
+                        .okHttpClient(okHttpClient)
+                        .addCustomTypeAdapter(CustomType.COUNTRYCODE, countryCodeAdapter)
+                        .build();
+
+                // Retrieve media from Anilist API
+                int page = 0;
+
+                while(hasNextPage){
+                    page += 1;
+                    getMediaFromAnilistAPI(apolloClient, 2018, MediaSeason.WINTER, page);
+                    Thread.sleep(15000);
+                    Log.d("GraphQL", "Page: " + page + ", HasNextPage: " + hasNextPage + ", Retrieved: " + mediaList.size());
+                }
+
+                Log.d("GraphQL", "Done");
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+
+            return null;
+        }
     }
 }

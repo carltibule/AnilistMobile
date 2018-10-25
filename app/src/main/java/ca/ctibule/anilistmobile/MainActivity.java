@@ -5,6 +5,7 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ListView;
 
 import com.apollographql.apollo.ApolloCall;
 import com.apollographql.apollo.ApolloClient;
@@ -42,6 +43,10 @@ public class MainActivity extends AppCompatActivity {
 
         QueryAnilistAPITask queryAnilistAPITask = new QueryAnilistAPITask();
         queryAnilistAPITask.execute();
+    }
+
+    private MainActivity getOuter(){
+        return MainActivity.this;
     }
 
     private void getMediaFromAnilistAPI(ApolloClient apolloClient, int year, MediaSeason season, int page){
@@ -209,16 +214,20 @@ public class MainActivity extends AppCompatActivity {
                     page += 1;
                     getMediaFromAnilistAPI(apolloClient, 2018, MediaSeason.WINTER, page);
                     Thread.sleep(15000);
-                    Log.d("GraphQL", "Page: " + page + ", HasNextPage: " + hasNextPage + ", Retrieved: " + mediaList.size());
                 }
-
-                Log.d("GraphQL", "Done");
             }
             catch (Exception e){
                 e.printStackTrace();
             }
 
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            ListView lstViewAnime = findViewById(R.id.list_view_anime);
+            AnilistMediaAdapter anilistMediaAdapter = new AnilistMediaAdapter(getOuter(), R.layout.lyt_media, mediaList);
+            lstViewAnime.setAdapter(anilistMediaAdapter);
         }
     }
 }

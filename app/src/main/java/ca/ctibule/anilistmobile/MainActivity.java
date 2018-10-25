@@ -26,12 +26,17 @@ import okhttp3.OkHttpClient;
 public class MainActivity extends AppCompatActivity {
 
     private static final String ANILIST_API_URL= "https://graphql.anilist.co";
-    private ArrayList<AnilistMedia> mediaList = new ArrayList<AnilistMedia>();
+    private ArrayList<AnilistMedia> mediaList;
+    private static boolean hasNextPage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Instantiate necesary variables;
+        mediaList = new ArrayList<AnilistMedia>();
+        hasNextPage = false;
 
         CustomTypeAdapter<String> countryCodeAdapter = new CustomTypeAdapter<String>() {
             @Override
@@ -56,7 +61,45 @@ public class MainActivity extends AppCompatActivity {
                 .okHttpClient(okHttpClient)
                 .addCustomTypeAdapter(CustomType.COUNTRYCODE, countryCodeAdapter)
                 .build();
-        apolloClient.query(MediaQuery.builder().year(2018).season(MediaSeason.FALL).page(1).build()).enqueue(new ApolloCall.Callback<MediaQuery.Data>() {
+
+        // Retrieve media from Anilist API
+        getMediaFromAnilistAPI(apolloClient, 2018, MediaSeason.WINTER, 1);
+
+        for(AnilistMedia media: mediaList){
+            Log.d("GraphQL", "Anilist ID: " + String.valueOf(media.getAnilistId()));
+            Log.d("GraphQL", "MAL ID: " + String.valueOf(media.getMalId()));
+            Log.d("GraphQL", "Romaji: " + media.getRomajiTitle());
+            Log.d("GraphQL", "English: " + media.getEnglishTitle());
+            Log.d("GraphQL", "Native: " + media.getNativeTitle());
+            Log.d("GraphQL", "MediaType: " + media.getMediaType().rawValue());
+            Log.d("GraphQL", "MediaFormat: " + media.getMediaFormat().rawValue());
+            Log.d("GraphQL", "MediaStatus: " + media.getMediaStatus().rawValue());
+            Log.d("GraphQL", "Description: " + media.getDescription());
+            Log.d("GraphQL", "StartDate: " + media.getStartDate());
+            Log.d("GraphQL", "EndDate: " + media.getEndDate());
+            Log.d("GraphQL", "Season: " + media.getMediaSeason().rawValue());
+            Log.d("GraphQL", "Episodes: " + media.getEpisodes());
+            Log.d("GraphQL", "Duration: " + media.getDuration());
+            Log.d("GraphQL", "Chapters: " + media.getChapters());
+            Log.d("GraphQL", "Volumes: " + media.getVolumes());
+            Log.d("GraphQL", "CountryOfOrigin: " + media.getCountryOfOrigin());
+            Log.d("GraphQL", "IsLicensed: " + media.isLicensed());
+            Log.d("GraphQL", "Source: " + media.getMediaSource().rawValue());
+            Log.d("GraphQL", "Hashtag: " + media.getHashtag());
+            Log.d("GraphQL", "TrailerID: " + media.getTrailerId());
+            Log.d("GraphQL", "UpdatedAt: " + media.getUpdatedAt());
+            Log.d("GraphQL", "LargeCoverImage: " + media.getLargeCoverImage());
+            Log.d("GraphQL", "MediumCoverImage: " + media.getMediumCoverImage());
+            Log.d("GraphQL", "BannerImage: " + media.getBannerImage());
+            Log.d("GraphQL", "AverageScore: " + media.getAverageScore());
+            Log.d("GraphQL", "MeanScore: " + media.getMeanScore());
+            Log.d("GraphQL", "IsAdult: " + media.isAdult());
+            Log.d("GraphQL", "--------------------------------------------------");
+        }
+    }
+
+    private void getMediaFromAnilistAPI(ApolloClient apolloClient, int year, MediaSeason season, int page){
+        apolloClient.query(MediaQuery.builder().year(year).season(season).page(page).build()).enqueue(new ApolloCall.Callback<MediaQuery.Data>() {
             @Override
             public void onResponse(@NotNull Response<MediaQuery.Data> response) {
                 for(MediaQuery.Medium medium : response.data().Page().media()){
@@ -181,37 +224,5 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("GraphQL", "Failure " + e.getMessage());
             }
         });
-
-        for(AnilistMedia media: mediaList){
-            Log.d("GraphQL", "Anilist ID: " + String.valueOf(media.getAnilistId()));
-            Log.d("GraphQL", "MAL ID: " + String.valueOf(media.getMalId()));
-            Log.d("GraphQL", "Romaji: " + media.getRomajiTitle());
-            Log.d("GraphQL", "English: " + media.getEnglishTitle());
-            Log.d("GraphQL", "Native: " + media.getNativeTitle());
-            Log.d("GraphQL", "MediaType: " + media.getMediaType().rawValue());
-            Log.d("GraphQL", "MediaFormat: " + media.getMediaFormat().rawValue());
-            Log.d("GraphQL", "MediaStatus: " + media.getMediaStatus().rawValue());
-            Log.d("GraphQL", "Description: " + media.getDescription());
-            Log.d("GraphQL", "StartDate: " + media.getStartDate());
-            Log.d("GraphQL", "EndDate: " + media.getEndDate());
-            Log.d("GraphQL", "Season: " + media.getMediaSeason().rawValue());
-            Log.d("GraphQL", "Episodes: " + media.getEpisodes());
-            Log.d("GraphQL", "Duration: " + media.getDuration());
-            Log.d("GraphQL", "Chapters: " + media.getChapters());
-            Log.d("GraphQL", "Volumes: " + media.getVolumes());
-            Log.d("GraphQL", "CountryOfOrigin: " + media.getCountryOfOrigin());
-            Log.d("GraphQL", "IsLicensed: " + media.isLicensed());
-            Log.d("GraphQL", "Source: " + media.getMediaSource().rawValue());
-            Log.d("GraphQL", "Hashtag: " + media.getHashtag());
-            Log.d("GraphQL", "TrailerID: " + media.getTrailerId());
-            Log.d("GraphQL", "UpdatedAt: " + media.getUpdatedAt());
-            Log.d("GraphQL", "LargeCoverImage: " + media.getLargeCoverImage());
-            Log.d("GraphQL", "MediumCoverImage: " + media.getMediumCoverImage());
-            Log.d("GraphQL", "BannerImage: " + media.getBannerImage());
-            Log.d("GraphQL", "AverageScore: " + media.getAverageScore());
-            Log.d("GraphQL", "MeanScore: " + media.getMeanScore());
-            Log.d("GraphQL", "IsAdult: " + media.isAdult());
-            Log.d("GraphQL", "--------------------------------------------------");
-        }
     }
 }

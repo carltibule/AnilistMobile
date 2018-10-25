@@ -58,8 +58,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NotNull Response<MediaQuery.Data> response) {
                 for(MediaQuery.Medium medium : response.data().Page().media()){
-                    Log.d("GraphQL", medium.title().romaji());
-                    Log.d("GraphQL", medium.description());
+                    if(medium.title().romaji() != null){
+                        Log.d("GraphQL", medium.title().romaji());
+                    }
                 }
             }
 

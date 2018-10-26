@@ -1,5 +1,7 @@
 package ca.ctibule.anilistmobile;
 
+import org.jsoup.Jsoup;
+
 import ca.ctibule.AnilistMobile.type.MediaFormat;
 import ca.ctibule.AnilistMobile.type.MediaSeason;
 import ca.ctibule.AnilistMobile.type.MediaSource;
@@ -137,7 +139,7 @@ public class AnilistMedia {
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.description = Jsoup.parse(description).text();
     }
 
     public String getStartDate() {

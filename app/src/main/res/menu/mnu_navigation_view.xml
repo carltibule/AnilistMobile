@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="mnu_sign_in"
+            android:title="@string/mnu_log_in"/>
+        <item
+            android:id="@+id/mnu_filter_by_season"
+            android:title="@string/mnu_filter_by_season"/>
+        <item
+            android:id="@+id/mnu_browse_mangas"
+            android:title="@string/mnu_browse_mangas"/>
+        <item
+            android:id="@+id/mnu_browse_news"
+            android:title="@string/mnu_browse_news"/>
+        <item
+            android:id="@+id/mnu_app_settings"
+            android:title="@string/mnu_app_settings"/>
+    </group>
+</menu>

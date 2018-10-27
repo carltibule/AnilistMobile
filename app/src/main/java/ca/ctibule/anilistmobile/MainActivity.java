@@ -106,10 +106,6 @@ public class MainActivity extends AppCompatActivity {
                         anilistMedia.setNativeTitle(medium.title().native_());
                     }
 
-                    if(medium.type() != null){
-                        anilistMedia.setMediaType(medium.type());
-                    }
-
                     if(medium.format() != null){
                         anilistMedia.setMediaFormat(medium.format());
                     }
@@ -126,14 +122,6 @@ public class MainActivity extends AppCompatActivity {
                         anilistMedia.setStartDate(medium.startDate().year(), medium.startDate().month(), medium.startDate().day());
                     }
 
-                    if(medium.endDate().year() != null && medium.endDate().month() != null && medium.endDate().day() != null){
-                        anilistMedia.setEndDate(medium.endDate().year(), medium.endDate().month(), medium.endDate().day());
-                    }
-
-                    if(medium.season() != null){
-                        anilistMedia.setMediaSeason(medium.season());
-                    }
-
                     if(medium.episodes() != null){
                         anilistMedia.setEpisodes(medium.episodes());
                     }
@@ -142,60 +130,12 @@ public class MainActivity extends AppCompatActivity {
                         anilistMedia.setDuration(medium.duration());
                     }
 
-                    if(medium.chapters() != null){
-                        anilistMedia.setChapters(medium.chapters());
-                    }
-
-                    if(medium.volumes() != null){
-                        anilistMedia.setVolumes(medium.volumes());
-                    }
-
-                    if(medium.countryOfOrigin() != null){
-                        anilistMedia.setCountryOfOrigin(medium.countryOfOrigin());
-                    }
-
-                    if(medium.isLicensed() != null){
-                        anilistMedia.setLicensed(medium.isLicensed());
-                    }
-
-                    if(medium.source() != null){
-                        anilistMedia.setMediaSource(medium.source());
-                    }
-
-                    if(medium.hashtag() != null){
-                        anilistMedia.setHashtag(medium.hashtag());
-                    }
-
-                    if(medium.trailer() != null && medium.trailer().id() != null){
-                        anilistMedia.setTrailerId(medium.trailer().id());
-                    }
-
-                    if(medium.updatedAt() != null){
-                        anilistMedia.setUpdatedAt(medium.updatedAt());
-                    }
-
                     if(medium.coverImage().large() != null){
                         anilistMedia.setLargeCoverImage(medium.coverImage().large());
                     }
 
                     if(medium.coverImage().medium() != null){
                         anilistMedia.setMediumCoverImage(medium.coverImage().medium());
-                    }
-
-                    if(medium.bannerImage() != null){
-                        anilistMedia.setBannerImage(medium.bannerImage());
-                    }
-
-                    if(medium.averageScore() != null){
-                        anilistMedia.setAverageScore(medium.averageScore());
-                    }
-
-                    if(medium.meanScore() != null){
-                        anilistMedia.setMeanScore(medium.meanScore());
-                    }
-
-                    if(medium.isAdult() != null){
-                        anilistMedia.setAdult(medium.isAdult());
                     }
 
                     mediaList.add(anilistMedia);
@@ -239,7 +179,6 @@ public class MainActivity extends AppCompatActivity {
                 OkHttpClient okHttpClient = new OkHttpClient.Builder().build();
                 ApolloClient apolloClient = ApolloClient.builder().serverUrl(ANILIST_API_URL)
                         .okHttpClient(okHttpClient)
-                        .addCustomTypeAdapter(CustomType.COUNTRYCODE, countryCodeAdapter)
                         .build();
 
                 // Retrieve media from Anilist API

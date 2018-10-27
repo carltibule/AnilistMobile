@@ -4,9 +4,7 @@ import org.jsoup.Jsoup;
 
 import ca.ctibule.AnilistMobile.type.MediaFormat;
 import ca.ctibule.AnilistMobile.type.MediaSeason;
-import ca.ctibule.AnilistMobile.type.MediaSource;
 import ca.ctibule.AnilistMobile.type.MediaStatus;
-import ca.ctibule.AnilistMobile.type.MediaType;
 
 public class AnilistMedia {
     private int anilistId;
@@ -14,7 +12,6 @@ public class AnilistMedia {
     private String romajiTitle;
     private String englishTitle;
     private String nativeTitle;
-    private MediaType mediaType;
     private MediaFormat mediaFormat;
     private MediaStatus mediaStatus;
     private String description;
@@ -27,7 +24,6 @@ public class AnilistMedia {
     private int volumes;
     private String countryOfOrigin;
     private boolean isLicensed;
-    private MediaSource mediaSource;
     private String hashtag;
     private String trailerId;
     private int updatedAt;
@@ -45,7 +41,6 @@ public class AnilistMedia {
         romajiTitle = "";
         englishTitle = "";
         nativeTitle = "";
-        mediaType = null;
         mediaFormat = null;
         mediaStatus = null;
         description = "";
@@ -58,7 +53,6 @@ public class AnilistMedia {
         volumes = 0;
         countryOfOrigin = "";
         isLicensed = false;
-        mediaSource = null;
         hashtag = "";
         trailerId = "";
         updatedAt = 0;
@@ -108,14 +102,6 @@ public class AnilistMedia {
 
     public void setNativeTitle(String nativeTitle) {
         this.nativeTitle = nativeTitle;
-    }
-
-    public MediaType getMediaType() {
-        return mediaType;
-    }
-
-    public void setMediaType(MediaType mediaType) {
-        this.mediaType = mediaType;
     }
 
     public MediaFormat getMediaFormat() {
@@ -221,14 +207,6 @@ public class AnilistMedia {
 
     public void setLicensed(boolean licensed) {
         isLicensed = licensed;
-    }
-
-    public MediaSource getMediaSource() {
-        return mediaSource;
-    }
-
-    public void setMediaSource(MediaSource mediaSource) {
-        this.mediaSource = mediaSource;
     }
 
     public String getHashtag() {

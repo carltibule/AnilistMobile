@@ -27,6 +27,11 @@ query MediaQuery($season: MediaSeason!, $year: Int!, $page: Int!){
                 large
                 medium
             }
+            nextAiringEpisode{
+                airingAt
+                timeUntilAiring
+                episode
+            }
         }
     }
 }

@@ -33,6 +33,7 @@ public class AnilistMedia {
     private int averageScore;
     private int meanScore;
     private boolean isAdult;
+    NextAiringEpisode nextAiringEpisode;
 
 
     public AnilistMedia(){
@@ -62,6 +63,9 @@ public class AnilistMedia {
         averageScore = 0;
         meanScore = 0;
         isAdult = false;
+
+        // Initialize inner-class NextAiringEpisode
+        nextAiringEpisode = new NextAiringEpisode();
     }
 
     public int getAnilistId() {
@@ -279,6 +283,36 @@ public class AnilistMedia {
 
     public void setAdult(boolean adult) {
         isAdult = adult;
+    }
+
+    public class NextAiringEpisode{
+        private int airingAt;
+        private int timeUntilAiring;
+        private int episode;
+
+        public int getAiringAt() {
+            return airingAt;
+        }
+
+        public void setAiringAt(int airingAt) {
+            this.airingAt = airingAt;
+        }
+
+        public int getTimeUntilAiring() {
+            return timeUntilAiring;
+        }
+
+        public void setTimeUntilAiring(int timeUntilAiring) {
+            this.timeUntilAiring = timeUntilAiring;
+        }
+
+        public int getEpisode() {
+            return episode;
+        }
+
+        public void setEpisode(int episode) {
+            this.episode = episode;
+        }
     }
 }
 

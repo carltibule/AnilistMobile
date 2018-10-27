@@ -138,6 +138,12 @@ public class MainActivity extends AppCompatActivity {
                         anilistMedia.setMediumCoverImage(medium.coverImage().medium());
                     }
 
+                    if(medium.nextAiringEpisode() != null){
+                        anilistMedia.nextAiringEpisode.setAiringAt(medium.nextAiringEpisode().airingAt());
+                        anilistMedia.nextAiringEpisode.setTimeUntilAiring(medium.nextAiringEpisode().timeUntilAiring());
+                        anilistMedia.nextAiringEpisode.setEpisode(medium.nextAiringEpisode().episode());
+                    }
+
                     mediaList.add(anilistMedia);
                 }
             }

@@ -103,7 +103,7 @@ public class AnilistMediaAdapter extends ArrayAdapter<AnilistMedia> {
                     nextEpisodeLabel = String.format("Airing at %s", media.getStartDate());
                 }
                 else{
-                    nextEpisodeLabel = String.format("Episode %d airing at %s",
+                    nextEpisodeLabel = String.format("Episode %d airing in %s",
                             media.nextAiringEpisode.getEpisode(),
                             media.nextAiringEpisode.getTimeUntilAiringString());
                 }

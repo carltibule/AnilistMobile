@@ -322,17 +322,17 @@ public class AnilistMedia {
             SimpleDateFormat minutes = new SimpleDateFormat("m");
 
             // Calculate the precise day
-            int day = Integer.parseInt(days.format(timeUntilAiring)) - 1;
+            int adjustedDays = Integer.parseInt(days.format(timeUntilAiring)) - 1;
 
             // Final display
             String timeUntilAiringStringText = "";
 
-            if(day < 1){
+            if(adjustedDays < 1){
                 timeUntilAiringStringText = String.format("%sh %sm", hours.format(timeUntilAiring),
                         minutes.format(timeUntilAiring));
             }
             else{
-                timeUntilAiringStringText = String.format("%sd %sh %sm", days.format(timeUntilAiring),
+                timeUntilAiringStringText = String.format("%sd %sh %sm", adjustedDays,
                         hours.format(timeUntilAiring),
                         minutes.format(timeUntilAiring));
             }

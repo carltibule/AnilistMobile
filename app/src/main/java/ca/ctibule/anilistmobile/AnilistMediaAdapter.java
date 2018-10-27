@@ -70,7 +70,7 @@ public class AnilistMediaAdapter extends ArrayAdapter<AnilistMedia> {
             }
 
             if(lblDescription != null){
-                lblDescription.setText(media.getDescription());
+                lblDescription.setText(media.getShortDescription());
             }
         }
 

@@ -134,6 +134,15 @@ public class AnilistMedia {
         this.mediaStatus = mediaStatus;
     }
 
+    public String getShortDescription(){
+        if(this.description.length() > 150){
+            return String.format("%s...", this.description.substring(0, 150));
+        }
+        else{
+            return this.description;
+        }
+    }
+
     public String getDescription() {
         return description;
     }

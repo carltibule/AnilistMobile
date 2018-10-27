@@ -2,6 +2,12 @@ package ca.ctibule.anilistmobile;
 
 import org.jsoup.Jsoup;
 
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
+
 import ca.ctibule.AnilistMobile.type.MediaFormat;
 import ca.ctibule.AnilistMobile.type.MediaSeason;
 import ca.ctibule.AnilistMobile.type.MediaStatus;
@@ -286,24 +292,61 @@ public class AnilistMedia {
     }
 
     public class NextAiringEpisode{
-        private int airingAt;
-        private int timeUntilAiring;
+        private Date airingAt;
+        private Date timeUntilAiring;
+        private long timeUntilAiringEpoch;
         private int episode;
+        private final SimpleDateFormat yearMonthDay = new SimpleDateFormat("yyyy-MM-dd hh:mm a");
 
-        public int getAiringAt() {
+        public String getAiringAtString(){
+            return yearMonthDay.format(this.airingAt);
+        }
+
+        public Date getAiringAt() {
             return airingAt;
         }
 
-        public void setAiringAt(int airingAt) {
-            this.airingAt = airingAt;
+
+        public void setAiringAt(long airingAt) {
+            this.airingAt = new Date(airingAt * 1000);
         }
 
-        public int getTimeUntilAiring() {
+
+        public long getTimeUntilAiringEpoch() {
+            return timeUntilAiringEpoch;
+        }
+
+        public String getTimeUntilAiringString(){
+            SimpleDateFormat days = new SimpleDateFormat("d");
+            SimpleDateFormat hours = new SimpleDateFormat("H");
+            SimpleDateFormat minutes = new SimpleDateFormat("m");
+
+            // Calculate the precise day
+            int day = Integer.parseInt(days.format(timeUntilAiring)) - 1;
+
+            // Final display
+            String timeUntilAiringStringText = "";
+
+            if(day < 1){
+                timeUntilAiringStringText = String.format("%sh %sm", hours.format(timeUntilAiring),
+                        minutes.format(timeUntilAiring));
+            }
+            else{
+                timeUntilAiringStringText = String.format("%sd %sh %sm", days.format(timeUntilAiring),
+                        hours.format(timeUntilAiring),
+                        minutes.format(timeUntilAiring));
+            }
+
+            return timeUntilAiringStringText;
+        }
+
+        public Date getTimeUntilAiring() {
             return timeUntilAiring;
         }
 
-        public void setTimeUntilAiring(int timeUntilAiring) {
-            this.timeUntilAiring = timeUntilAiring;
+        public void setTimeUntilAiring(long timeUntilAiring) {
+            this.timeUntilAiring = new Date(timeUntilAiring * 1000);
+            this.timeUntilAiringEpoch = timeUntilAiring;
         }
 
         public int getEpisode() {

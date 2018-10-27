@@ -42,6 +42,7 @@ public class AnilistMediaAdapter extends ArrayAdapter<AnilistMedia> {
             TextView lblTitle = v.findViewById(R.id.lbl_title);
             TextView lblDescription = v.findViewById(R.id.lbl_description);
             TextView lblEpisodesAndDuration = v.findViewById(R.id.lbl_episodes_and_duration);
+            TextView lblNextEpisode = v.findViewById(R.id.lbl_next_episode);
 
             if(imgCoverImage != null){
                 try{
@@ -93,6 +94,21 @@ public class AnilistMediaAdapter extends ArrayAdapter<AnilistMedia> {
                 }
 
                 lblEpisodesAndDuration.setText(String.format("%s episodes x %s mins", episodeCount, duration));
+            }
+
+            if(lblNextEpisode != null){
+                String nextEpisodeLabel = "";
+
+                if(media.nextAiringEpisode.getTimeUntilAiringEpoch() == 0){
+                    nextEpisodeLabel = String.format("Airing at %s", media.getStartDate());
+                }
+                else{
+                    nextEpisodeLabel = String.format("Episode %d airing at %s",
+                            media.nextAiringEpisode.getEpisode(),
+                            media.nextAiringEpisode.getTimeUntilAiringString());
+                }
+
+                lblNextEpisode.setText(nextEpisodeLabel);
             }
         }
 

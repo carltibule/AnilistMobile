@@ -11,7 +11,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.apollographql.apollo.ApolloCall;
 import com.apollographql.apollo.ApolloClient;
@@ -33,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<AnilistMedia> mediaList;
     private static boolean hasNextPage;
     private DrawerLayout mDrawerLayout;
+    ListView lstViewAnime;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
         // Instantiate necesary variables;
         mediaList = new ArrayList<AnilistMedia>();
         hasNextPage = true;
+        lstViewAnime = findViewById(R.id.list_view_anime);
+        progressBar = findViewById(R.id.progressBar);
 
         QueryAnilistAPITask queryAnilistAPITask = new QueryAnilistAPITask();
         queryAnilistAPITask.execute();
@@ -203,6 +211,11 @@ public class MainActivity extends AppCompatActivity {
 
     private class QueryAnilistAPITask extends AsyncTask<Void, Void, Void>{
         @Override
+        protected void onPreExecute() {
+            progressBar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
         protected Void doInBackground(Void... voids) {
             try{
                 CustomTypeAdapter<String> countryCodeAdapter = new CustomTypeAdapter<String>() {
@@ -247,7 +260,9 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            ListView lstViewAnime = findViewById(R.id.list_view_anime);
+            //Remove progress bar
+            progressBar.setVisibility(View.GONE);
+
             AnilistMediaAdapter anilistMediaAdapter = new AnilistMediaAdapter(getOuter(), R.layout.lyt_media, mediaList);
             lstViewAnime.setAdapter(anilistMediaAdapter);
         }

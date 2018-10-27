@@ -30,6 +30,12 @@
             android:text="" />
 
         <TextView
+            android:id="@+id/lbl_episodes_and_duration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="" />
+
+        <TextView
             android:id="@+id/lbl_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -78,11 +78,6 @@ public class MainActivity extends AppCompatActivity {
                 hasNextPage = response.data().Page().pageInfo().hasNextPage();
 
                 for(MediaQuery.Medium medium : response.data().Page().media()){
-<<<<<<< HEAD
-                    if(medium.title().romaji() != null){
-                        Log.d("GraphQL", medium.title().romaji());
-                    }
-=======
                     AnilistMedia anilistMedia = new AnilistMedia();
 
                     anilistMedia.setAnilistId(medium.id());
@@ -196,7 +191,6 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     mediaList.add(anilistMedia);
->>>>>>> dev
                 }
             }
 

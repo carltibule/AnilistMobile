@@ -1,25 +1,23 @@
 package ca.ctibule.anilistmobile;
 
 import android.os.AsyncTask;
-import android.provider.MediaStore;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.widget.ListView;
 
 import com.apollographql.apollo.ApolloCall;
 import com.apollographql.apollo.ApolloClient;
 import com.apollographql.apollo.api.Response;
 import com.apollographql.apollo.exception.ApolloException;
-import com.apollographql.apollo.exception.ApolloParseException;
 import com.apollographql.apollo.response.CustomTypeAdapter;
 import com.apollographql.apollo.response.CustomTypeValue;
-
 import org.jetbrains.annotations.NotNull;
-
-import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
 import ca.ctibule.AnilistMobile.MediaQuery;
 import ca.ctibule.AnilistMobile.type.CustomType;
@@ -43,6 +41,13 @@ public class MainActivity extends AppCompatActivity {
 
         QueryAnilistAPITask queryAnilistAPITask = new QueryAnilistAPITask();
         queryAnilistAPITask.execute();
+
+        // Add toolbar
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeAsUpIndicator(R.drawable.baseline_menu_black_18dp);
     }
 
     private MainActivity getOuter(){

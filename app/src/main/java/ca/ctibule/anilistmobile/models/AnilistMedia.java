@@ -22,7 +22,6 @@ public class AnilistMedia {
     private String countryOfOrigin;
     private boolean isLicensed;
     private String hashtag;
-    private String trailerId;
     private int updatedAt;
     private int averageScore;
     private int meanScore;
@@ -30,6 +29,7 @@ public class AnilistMedia {
 
     //Associated objects
     public MediaTitle title;
+    public MediaTrailer trailer;
     public MediaImage image;
     public AiringEpisode nextAiringEpisode;
 
@@ -51,7 +51,6 @@ public class AnilistMedia {
         countryOfOrigin = "";
         isLicensed = false;
         hashtag = "";
-        trailerId = "";
         updatedAt = 0;
         averageScore = 0;
         meanScore = 0;
@@ -59,6 +58,7 @@ public class AnilistMedia {
 
         // Initialize inner-class NextAiringEpisode
         title = new MediaTitle();
+        trailer = new MediaTrailer();
         image = new MediaImage();
         nextAiringEpisode = new AiringEpisode();
     }
@@ -190,14 +190,6 @@ public class AnilistMedia {
 
     public void setHashtag(String hashtag) {
         this.hashtag = hashtag;
-    }
-
-    public String getTrailerId() {
-        return trailerId;
-    }
-
-    public void setTrailerId(String trailerId) {
-        this.trailerId = trailerId;
     }
 
     public int getUpdatedAt() {

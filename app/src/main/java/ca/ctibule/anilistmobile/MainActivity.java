@@ -8,12 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
@@ -27,7 +23,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 
 import ca.ctibule.AnilistMobile.MediaQuery;
-import ca.ctibule.AnilistMobile.type.CustomType;
 import ca.ctibule.AnilistMobile.type.MediaSeason;
 import okhttp3.OkHttpClient;
 
@@ -79,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void getMediaFromAnilistAPI(ApolloClient apolloClient, int year, MediaSeason season, int page){
+    private void getMediaSummaryFromAnilistAPI(ApolloClient apolloClient, int year, MediaSeason season, int page){
         apolloClient.query(MediaQuery.builder().year(year).season(season).page(page).build()).enqueue(new ApolloCall.Callback<MediaQuery.Data>() {
             @Override
             public void onResponse(@NotNull Response<MediaQuery.Data> response) {
@@ -192,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
 
                 while(hasNextPage){
                     page += 1;
-                    getMediaFromAnilistAPI(apolloClient, 2018, MediaSeason.FALL, page);
+                    getMediaSummaryFromAnilistAPI(apolloClient, 2018, MediaSeason.FALL, page);
                     Thread.sleep(15000);
                 }
             }

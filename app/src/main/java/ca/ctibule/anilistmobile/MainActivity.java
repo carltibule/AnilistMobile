@@ -11,7 +11,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.apollographql.apollo.ApolloCall;
 import com.apollographql.apollo.ApolloClient;
@@ -33,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<AnilistMedia> mediaList;
     private static boolean hasNextPage;
     private DrawerLayout mDrawerLayout;
+    ListView lstViewAnime;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
         // Instantiate necesary variables;
         mediaList = new ArrayList<AnilistMedia>();
         hasNextPage = true;
+        lstViewAnime = findViewById(R.id.list_view_anime);
+        progressBar = findViewById(R.id.progressBar);
 
         QueryAnilistAPITask queryAnilistAPITask = new QueryAnilistAPITask();
         queryAnilistAPITask.execute();
@@ -98,10 +106,6 @@ public class MainActivity extends AppCompatActivity {
                         anilistMedia.setNativeTitle(medium.title().native_());
                     }
 
-                    if(medium.type() != null){
-                        anilistMedia.setMediaType(medium.type());
-                    }
-
                     if(medium.format() != null){
                         anilistMedia.setMediaFormat(medium.format());
                     }
@@ -118,52 +122,12 @@ public class MainActivity extends AppCompatActivity {
                         anilistMedia.setStartDate(medium.startDate().year(), medium.startDate().month(), medium.startDate().day());
                     }
 
-                    if(medium.endDate().year() != null && medium.endDate().month() != null && medium.endDate().day() != null){
-                        anilistMedia.setEndDate(medium.endDate().year(), medium.endDate().month(), medium.endDate().day());
-                    }
-
-                    if(medium.season() != null){
-                        anilistMedia.setMediaSeason(medium.season());
-                    }
-
                     if(medium.episodes() != null){
                         anilistMedia.setEpisodes(medium.episodes());
                     }
 
                     if(medium.duration() != null){
                         anilistMedia.setDuration(medium.duration());
-                    }
-
-                    if(medium.chapters() != null){
-                        anilistMedia.setChapters(medium.chapters());
-                    }
-
-                    if(medium.volumes() != null){
-                        anilistMedia.setVolumes(medium.volumes());
-                    }
-
-                    if(medium.countryOfOrigin() != null){
-                        anilistMedia.setCountryOfOrigin(medium.countryOfOrigin());
-                    }
-
-                    if(medium.isLicensed() != null){
-                        anilistMedia.setLicensed(medium.isLicensed());
-                    }
-
-                    if(medium.source() != null){
-                        anilistMedia.setMediaSource(medium.source());
-                    }
-
-                    if(medium.hashtag() != null){
-                        anilistMedia.setHashtag(medium.hashtag());
-                    }
-
-                    if(medium.trailer() != null && medium.trailer().id() != null){
-                        anilistMedia.setTrailerId(medium.trailer().id());
-                    }
-
-                    if(medium.updatedAt() != null){
-                        anilistMedia.setUpdatedAt(medium.updatedAt());
                     }
 
                     if(medium.coverImage().large() != null){
@@ -174,20 +138,10 @@ public class MainActivity extends AppCompatActivity {
                         anilistMedia.setMediumCoverImage(medium.coverImage().medium());
                     }
 
-                    if(medium.bannerImage() != null){
-                        anilistMedia.setBannerImage(medium.bannerImage());
-                    }
-
-                    if(medium.averageScore() != null){
-                        anilistMedia.setAverageScore(medium.averageScore());
-                    }
-
-                    if(medium.meanScore() != null){
-                        anilistMedia.setMeanScore(medium.meanScore());
-                    }
-
-                    if(medium.isAdult() != null){
-                        anilistMedia.setAdult(medium.isAdult());
+                    if(medium.nextAiringEpisode() != null){
+                        anilistMedia.nextAiringEpisode.setAiringAt(medium.nextAiringEpisode().airingAt());
+                        anilistMedia.nextAiringEpisode.setTimeUntilAiring(medium.nextAiringEpisode().timeUntilAiring());
+                        anilistMedia.nextAiringEpisode.setEpisode(medium.nextAiringEpisode().episode());
                     }
 
                     mediaList.add(anilistMedia);
@@ -202,6 +156,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private class QueryAnilistAPITask extends AsyncTask<Void, Void, Void>{
+        @Override
+        protected void onPreExecute() {
+            progressBar.setVisibility(View.VISIBLE);
+        }
+
         @Override
         protected Void doInBackground(Void... voids) {
             try{
@@ -226,7 +185,6 @@ public class MainActivity extends AppCompatActivity {
                 OkHttpClient okHttpClient = new OkHttpClient.Builder().build();
                 ApolloClient apolloClient = ApolloClient.builder().serverUrl(ANILIST_API_URL)
                         .okHttpClient(okHttpClient)
-                        .addCustomTypeAdapter(CustomType.COUNTRYCODE, countryCodeAdapter)
                         .build();
 
                 // Retrieve media from Anilist API
@@ -247,7 +205,9 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            ListView lstViewAnime = findViewById(R.id.list_view_anime);
+            //Remove progress bar
+            progressBar.setVisibility(View.GONE);
+
             AnilistMediaAdapter anilistMediaAdapter = new AnilistMediaAdapter(getOuter(), R.layout.lyt_media, mediaList);
             lstViewAnime.setAdapter(anilistMediaAdapter);
         }

@@ -2,11 +2,15 @@ package ca.ctibule.anilistmobile;
 
 import org.jsoup.Jsoup;
 
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
+
 import ca.ctibule.AnilistMobile.type.MediaFormat;
 import ca.ctibule.AnilistMobile.type.MediaSeason;
-import ca.ctibule.AnilistMobile.type.MediaSource;
 import ca.ctibule.AnilistMobile.type.MediaStatus;
-import ca.ctibule.AnilistMobile.type.MediaType;
 
 public class AnilistMedia {
     private int anilistId;
@@ -14,7 +18,6 @@ public class AnilistMedia {
     private String romajiTitle;
     private String englishTitle;
     private String nativeTitle;
-    private MediaType mediaType;
     private MediaFormat mediaFormat;
     private MediaStatus mediaStatus;
     private String description;
@@ -27,7 +30,6 @@ public class AnilistMedia {
     private int volumes;
     private String countryOfOrigin;
     private boolean isLicensed;
-    private MediaSource mediaSource;
     private String hashtag;
     private String trailerId;
     private int updatedAt;
@@ -37,6 +39,7 @@ public class AnilistMedia {
     private int averageScore;
     private int meanScore;
     private boolean isAdult;
+    NextAiringEpisode nextAiringEpisode;
 
 
     public AnilistMedia(){
@@ -45,7 +48,6 @@ public class AnilistMedia {
         romajiTitle = "";
         englishTitle = "";
         nativeTitle = "";
-        mediaType = null;
         mediaFormat = null;
         mediaStatus = null;
         description = "";
@@ -58,7 +60,6 @@ public class AnilistMedia {
         volumes = 0;
         countryOfOrigin = "";
         isLicensed = false;
-        mediaSource = null;
         hashtag = "";
         trailerId = "";
         updatedAt = 0;
@@ -68,6 +69,9 @@ public class AnilistMedia {
         averageScore = 0;
         meanScore = 0;
         isAdult = false;
+
+        // Initialize inner-class NextAiringEpisode
+        nextAiringEpisode = new NextAiringEpisode();
     }
 
     public int getAnilistId() {
@@ -108,14 +112,6 @@ public class AnilistMedia {
 
     public void setNativeTitle(String nativeTitle) {
         this.nativeTitle = nativeTitle;
-    }
-
-    public MediaType getMediaType() {
-        return mediaType;
-    }
-
-    public void setMediaType(MediaType mediaType) {
-        this.mediaType = mediaType;
     }
 
     public MediaFormat getMediaFormat() {
@@ -223,14 +219,6 @@ public class AnilistMedia {
         isLicensed = licensed;
     }
 
-    public MediaSource getMediaSource() {
-        return mediaSource;
-    }
-
-    public void setMediaSource(MediaSource mediaSource) {
-        this.mediaSource = mediaSource;
-    }
-
     public String getHashtag() {
         return hashtag;
     }
@@ -301,6 +289,73 @@ public class AnilistMedia {
 
     public void setAdult(boolean adult) {
         isAdult = adult;
+    }
+
+    public class NextAiringEpisode{
+        private Date airingAt;
+        private Date timeUntilAiring;
+        private long timeUntilAiringEpoch;
+        private int episode;
+        private final SimpleDateFormat yearMonthDay = new SimpleDateFormat("yyyy-MM-dd hh:mm a");
+
+        public String getAiringAtString(){
+            return yearMonthDay.format(this.airingAt);
+        }
+
+        public Date getAiringAt() {
+            return airingAt;
+        }
+
+
+        public void setAiringAt(long airingAt) {
+            this.airingAt = new Date(airingAt * 1000);
+        }
+
+
+        public long getTimeUntilAiringEpoch() {
+            return timeUntilAiringEpoch;
+        }
+
+        public String getTimeUntilAiringString(){
+            SimpleDateFormat days = new SimpleDateFormat("d");
+            SimpleDateFormat hours = new SimpleDateFormat("H");
+            SimpleDateFormat minutes = new SimpleDateFormat("m");
+
+            // Calculate the precise day
+            int adjustedDays = Integer.parseInt(days.format(timeUntilAiring)) - 1;
+
+            // Final display
+            String timeUntilAiringStringText = "";
+
+            if(adjustedDays < 1){
+                timeUntilAiringStringText = String.format("%sh %sm", hours.format(timeUntilAiring),
+                        minutes.format(timeUntilAiring));
+            }
+            else{
+                timeUntilAiringStringText = String.format("%sd %sh %sm", adjustedDays,
+                        hours.format(timeUntilAiring),
+                        minutes.format(timeUntilAiring));
+            }
+
+            return timeUntilAiringStringText;
+        }
+
+        public Date getTimeUntilAiring() {
+            return timeUntilAiring;
+        }
+
+        public void setTimeUntilAiring(long timeUntilAiring) {
+            this.timeUntilAiring = new Date(timeUntilAiring * 1000);
+            this.timeUntilAiringEpoch = timeUntilAiring;
+        }
+
+        public int getEpisode() {
+            return episode;
+        }
+
+        public void setEpisode(int episode) {
+            this.episode = episode;
+        }
     }
 }
 

@@ -13,7 +13,6 @@ query MediaQuery($season: MediaSeason!, $year: Int!, $page: Int!){
                 english
                 native
             }
-            type
             format
             status
             description
@@ -22,41 +21,16 @@ query MediaQuery($season: MediaSeason!, $year: Int!, $page: Int!){
                 month
                 day
             }
-            endDate{
-                year
-                month
-                day
-            }
-            season
             episodes
             duration
-            chapters
-            volumes
-            countryOfOrigin
-            isLicensed
-            source
-            hashtag
-            trailer{
-                id
-            }
-            updatedAt
             coverImage{
                 large
                 medium
             }
-            bannerImage
-            averageScore
-            meanScore
-            isAdult
-            streamingEpisodes{
-                title
-                thumbnail
-                url
-                site
-            }
-            tags{
-                name
-                category
+            nextAiringEpisode{
+                airingAt
+                timeUntilAiring
+                episode
             }
         }
     }

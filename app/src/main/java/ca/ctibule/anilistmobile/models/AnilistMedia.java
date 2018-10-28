@@ -2,6 +2,8 @@ package ca.ctibule.anilistmobile.models;
 
 import org.jsoup.Jsoup;
 
+import java.util.ArrayList;
+
 import ca.ctibule.AnilistMobile.type.MediaFormat;
 import ca.ctibule.AnilistMobile.type.MediaSeason;
 import ca.ctibule.AnilistMobile.type.MediaStatus;
@@ -27,13 +29,14 @@ public class AnilistMedia {
     private int meanScore;
     private boolean isAdult;
 
-    //Associated objects
+    // Associated objects
     public MediaTitle title;
     public MediaTrailer trailer;
     public MediaImage image;
     public AiringEpisode nextAiringEpisode;
 
-
+    // Associated arrays
+    private ArrayList<String> genres;
 
     public AnilistMedia(){
         anilistId = 0;
@@ -56,11 +59,14 @@ public class AnilistMedia {
         meanScore = 0;
         isAdult = false;
 
-        // Initialize inner-class NextAiringEpisode
+        // Initialize associated models
         title = new MediaTitle();
         trailer = new MediaTrailer();
         image = new MediaImage();
         nextAiringEpisode = new AiringEpisode();
+
+        // Initialize associated arrays
+        genres = new ArrayList<>();
     }
 
     public int getAnilistId() {
@@ -222,6 +228,14 @@ public class AnilistMedia {
 
     public void setAdult(boolean adult) {
         isAdult = adult;
+    }
+
+    public ArrayList<String> getGenres() {
+        return genres;
+    }
+
+    public void addGenre(String genre){
+        this.genres.add(genre);
     }
 }
 

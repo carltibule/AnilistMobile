@@ -38,6 +38,7 @@ public class AnilistMedia {
     private ArrayList<String> genres;
     private ArrayList<String> tags;
     private ArrayList<MediaExternalLink> externalLinks;
+    private ArrayList<MediaStreamingEpisode> streamingEpisodes;
 
     public AnilistMedia(){
         anilistId = 0;
@@ -69,6 +70,7 @@ public class AnilistMedia {
         genres = new ArrayList<>();
         tags = new ArrayList<>();
         externalLinks = new ArrayList<>();
+        streamingEpisodes = new ArrayList<>();
     }
 
     public int getAnilistId() {
@@ -238,6 +240,14 @@ public class AnilistMedia {
 
     public void addExternalLink(MediaExternalLink externalLink){
         this.externalLinks.add(externalLink);
+    }
+
+    public ArrayList<MediaStreamingEpisode> getStreamingEpisodes() {
+        return streamingEpisodes;
+    }
+
+    public void addStreamingEpisode(MediaStreamingEpisode mediaStreamingEpisode){
+        this.streamingEpisodes.add(mediaStreamingEpisode);
     }
 }
 

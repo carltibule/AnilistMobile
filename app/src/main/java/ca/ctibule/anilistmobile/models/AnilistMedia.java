@@ -7,10 +7,12 @@ import java.util.ArrayList;
 import ca.ctibule.AnilistMobile.type.MediaFormat;
 import ca.ctibule.AnilistMobile.type.MediaSeason;
 import ca.ctibule.AnilistMobile.type.MediaStatus;
+import ca.ctibule.AnilistMobile.type.MediaType;
 
 public class AnilistMedia {
     private int anilistId;
     private int malId;
+    private MediaType mediaType;
     private MediaFormat mediaFormat;
     private MediaStatus mediaStatus;
     private String description;
@@ -26,6 +28,7 @@ public class AnilistMedia {
     private String hashtag;
     private int updatedAt;
     private boolean isAdult;
+    private String siteUrl;
 
     // Associated objects
     public MediaTitle title;
@@ -58,7 +61,7 @@ public class AnilistMedia {
         hashtag = "";
         updatedAt = 0;
         isAdult = false;
-
+        siteUrl = "";
         // Initialize associated models
         title = new MediaTitle();
         trailer = new MediaTrailer();
@@ -87,6 +90,14 @@ public class AnilistMedia {
 
     public void setMalId(int malId) {
         this.malId = malId;
+    }
+
+    public MediaType getMediaType() {
+        return mediaType;
+    }
+
+    public void setMediaType(MediaType mediaType) {
+        this.mediaType = mediaType;
     }
 
     public MediaFormat getMediaFormat() {
@@ -216,6 +227,14 @@ public class AnilistMedia {
 
     public void setAdult(boolean adult) {
         isAdult = adult;
+    }
+
+    public String getSiteUrl() {
+        return siteUrl;
+    }
+
+    public void setSiteUrl(String siteUrl) {
+        this.siteUrl = siteUrl;
     }
 
     public ArrayList<String> getGenres() {

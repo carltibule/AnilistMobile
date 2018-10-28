@@ -5,4 +5,7 @@
     <string name="mnu_browse_mangas">Browse mangas</string>
     <string name="mnu_browse_news">Browse news</string>
     <string name="mnu_app_settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

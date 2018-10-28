@@ -37,6 +37,7 @@ public class AnilistMedia {
     // Associated arrays
     private ArrayList<String> genres;
     private ArrayList<String> tags;
+    private ArrayList<MediaExternalLink> externalLinks;
 
     public AnilistMedia(){
         anilistId = 0;
@@ -67,6 +68,7 @@ public class AnilistMedia {
         // Initialize associated arrays
         genres = new ArrayList<>();
         tags = new ArrayList<>();
+        externalLinks = new ArrayList<>();
     }
 
     public int getAnilistId() {
@@ -228,6 +230,14 @@ public class AnilistMedia {
 
     public void addTag(String tag){
         this.tags.add(tag);
+    }
+
+    public ArrayList<MediaExternalLink> getExternalLinks() {
+        return externalLinks;
+    }
+
+    public void addExternalLink(MediaExternalLink externalLink){
+        this.externalLinks.add(externalLink);
     }
 }
 

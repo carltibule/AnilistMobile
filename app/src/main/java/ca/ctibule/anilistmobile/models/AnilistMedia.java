@@ -2,12 +2,6 @@ package ca.ctibule.anilistmobile.models;
 
 import org.jsoup.Jsoup;
 
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Date;
-
 import ca.ctibule.AnilistMobile.type.MediaFormat;
 import ca.ctibule.AnilistMobile.type.MediaSeason;
 import ca.ctibule.AnilistMobile.type.MediaStatus;
@@ -30,16 +24,15 @@ public class AnilistMedia {
     private String hashtag;
     private String trailerId;
     private int updatedAt;
-    private String largeCoverImage;
-    private String mediumCoverImage;
-    private String bannerImage;
     private int averageScore;
     private int meanScore;
     private boolean isAdult;
 
     //Associated objects
+    public MediaTitle title;
+    public MediaImage image;
     public AiringEpisode nextAiringEpisode;
-    public AnilistMediaTitle titles;
+
 
 
     public AnilistMedia(){
@@ -60,15 +53,13 @@ public class AnilistMedia {
         hashtag = "";
         trailerId = "";
         updatedAt = 0;
-        largeCoverImage = "";
-        mediumCoverImage = "";
-        bannerImage = "";
         averageScore = 0;
         meanScore = 0;
         isAdult = false;
 
         // Initialize inner-class NextAiringEpisode
-        titles = new AnilistMediaTitle();
+        title = new MediaTitle();
+        image = new MediaImage();
         nextAiringEpisode = new AiringEpisode();
     }
 
@@ -215,30 +206,6 @@ public class AnilistMedia {
 
     public void setUpdatedAt(int updatedAt) {
         this.updatedAt = updatedAt;
-    }
-
-    public String getLargeCoverImage() {
-        return largeCoverImage;
-    }
-
-    public void setLargeCoverImage(String largeCoverImage) {
-        this.largeCoverImage = largeCoverImage;
-    }
-
-    public String getMediumCoverImage() {
-        return mediumCoverImage;
-    }
-
-    public void setMediumCoverImage(String mediumCoverImage) {
-        this.mediumCoverImage = mediumCoverImage;
-    }
-
-    public String getBannerImage() {
-        return bannerImage;
-    }
-
-    public void setBannerImage(String bannerImage) {
-        this.bannerImage = bannerImage;
     }
 
     public int getAverageScore() {

@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,11 +51,11 @@ public class AnilistMediaAdapter extends ArrayAdapter<AnilistMedia> {
                 try{
                     String imageLink = null;
 
-                    if(media.getMediumCoverImage() != null){
-                        imageLink = media.getMediumCoverImage();
+                    if(media.image.getMediumCoverImage() != null){
+                        imageLink = media.image.getMediumCoverImage();
                     }
                     else{
-                        imageLink = media.getLargeCoverImage();
+                        imageLink = media.image.getLargeCoverImage();
                     }
 
                     new DownloadImageTask(imgCoverImage).execute(imageLink);
@@ -67,11 +66,11 @@ public class AnilistMediaAdapter extends ArrayAdapter<AnilistMedia> {
             }
 
             if(lblTitle != null){
-                if(media.titles.getRomaji() != null){
-                    lblTitle.setText(media.titles.getRomaji());
+                if(media.title.getRomaji() != null){
+                    lblTitle.setText(media.title.getRomaji());
                 }
                 else{
-                    lblTitle.setText(media.titles.getEnglish());
+                    lblTitle.setText(media.title.getEnglish());
                 }
             }
 

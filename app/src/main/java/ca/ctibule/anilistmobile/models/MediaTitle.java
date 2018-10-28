@@ -2,13 +2,13 @@ package ca.ctibule.anilistmobile.models;
 
 import java.util.ArrayList;
 
-public class AnilistMediaTitle {
+public class MediaTitle {
     private String romaji;
     private String nativeLanguage;
     private String english;
     private ArrayList<String> alternatives;
 
-    public AnilistMediaTitle(){
+    public MediaTitle(){
         this.romaji = "";
         this.nativeLanguage = "";
         this.english = "";

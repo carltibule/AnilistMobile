@@ -91,15 +91,15 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     if(medium.title().romaji() != null){
-                        anilistMedia.titles.setRomaji(medium.title().romaji());
+                        anilistMedia.title.setRomaji(medium.title().romaji());
                     }
 
                     if(medium.title().english() != null){
-                        anilistMedia.titles.setEnglish(medium.title().english());
+                        anilistMedia.title.setEnglish(medium.title().english());
                     }
 
                     if(medium.title().native_() != null){
-                        anilistMedia.titles.setNativeLanguage(medium.title().native_());
+                        anilistMedia.title.setNativeLanguage(medium.title().native_());
                     }
 
                     if(medium.format() != null){
@@ -127,11 +127,11 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     if(medium.coverImage().large() != null){
-                        anilistMedia.setLargeCoverImage(medium.coverImage().large());
+                        anilistMedia.image.setLargeCoverImage(medium.coverImage().large());
                     }
 
                     if(medium.coverImage().medium() != null){
-                        anilistMedia.setMediumCoverImage(medium.coverImage().medium());
+                        anilistMedia.image.setMediumCoverImage(medium.coverImage().medium());
                     }
 
                     if(medium.nextAiringEpisode() != null){

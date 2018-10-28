@@ -15,9 +15,6 @@ import ca.ctibule.AnilistMobile.type.MediaStatus;
 public class AnilistMedia {
     private int anilistId;
     private int malId;
-    private String romajiTitle;
-    private String englishTitle;
-    private String nativeTitle;
     private MediaFormat mediaFormat;
     private MediaStatus mediaStatus;
     private String description;
@@ -42,14 +39,12 @@ public class AnilistMedia {
 
     //Associated objects
     public AiringEpisode nextAiringEpisode;
+    public AnilistMediaTitle titles;
 
 
     public AnilistMedia(){
         anilistId = 0;
         malId = 0;
-        romajiTitle = "";
-        englishTitle = "";
-        nativeTitle = "";
         mediaFormat = null;
         mediaStatus = null;
         description = "";
@@ -73,6 +68,7 @@ public class AnilistMedia {
         isAdult = false;
 
         // Initialize inner-class NextAiringEpisode
+        titles = new AnilistMediaTitle();
         nextAiringEpisode = new AiringEpisode();
     }
 
@@ -90,30 +86,6 @@ public class AnilistMedia {
 
     public void setMalId(int malId) {
         this.malId = malId;
-    }
-
-    public String getRomajiTitle() {
-        return romajiTitle;
-    }
-
-    public void setRomajiTitle(String romajiTitle) {
-        this.romajiTitle = romajiTitle;
-    }
-
-    public String getEnglishTitle() {
-        return englishTitle;
-    }
-
-    public void setEnglishTitle(String englishTitle) {
-        this.englishTitle = englishTitle;
-    }
-
-    public String getNativeTitle() {
-        return nativeTitle;
-    }
-
-    public void setNativeTitle(String nativeTitle) {
-        this.nativeTitle = nativeTitle;
     }
 
     public MediaFormat getMediaFormat() {

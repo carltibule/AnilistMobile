@@ -67,11 +67,11 @@ public class AnilistMediaAdapter extends ArrayAdapter<AnilistMedia> {
             }
 
             if(lblTitle != null){
-                if(media.getRomajiTitle() != null){
-                    lblTitle.setText(media.getRomajiTitle());
+                if(media.titles.getRomaji() != null){
+                    lblTitle.setText(media.titles.getRomaji());
                 }
                 else{
-                    lblTitle.setText(media.getEnglishTitle());
+                    lblTitle.setText(media.titles.getEnglish());
                 }
             }
 

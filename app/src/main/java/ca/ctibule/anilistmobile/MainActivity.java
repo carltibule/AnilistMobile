@@ -91,15 +91,15 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     if(medium.title().romaji() != null){
-                        anilistMedia.setRomajiTitle(medium.title().romaji());
+                        anilistMedia.titles.setRomaji(medium.title().romaji());
                     }
 
                     if(medium.title().english() != null){
-                        anilistMedia.setEnglishTitle(medium.title().english());
+                        anilistMedia.titles.setEnglish(medium.title().english());
                     }
 
                     if(medium.title().native_() != null){
-                        anilistMedia.setNativeTitle(medium.title().native_());
+                        anilistMedia.titles.setNativeLanguage(medium.title().native_());
                     }
 
                     if(medium.format() != null){

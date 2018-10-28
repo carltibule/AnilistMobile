@@ -1,4 +1,4 @@
-package ca.ctibule.anilistmobile;
+package ca.ctibule.anilistmobile.models;
 
 import org.jsoup.Jsoup;
 
@@ -39,7 +39,9 @@ public class AnilistMedia {
     private int averageScore;
     private int meanScore;
     private boolean isAdult;
-    NextAiringEpisode nextAiringEpisode;
+
+    //Associated objects
+    public AiringEpisode nextAiringEpisode;
 
 
     public AnilistMedia(){
@@ -71,7 +73,7 @@ public class AnilistMedia {
         isAdult = false;
 
         // Initialize inner-class NextAiringEpisode
-        nextAiringEpisode = new NextAiringEpisode();
+        nextAiringEpisode = new AiringEpisode();
     }
 
     public int getAnilistId() {
@@ -289,73 +291,6 @@ public class AnilistMedia {
 
     public void setAdult(boolean adult) {
         isAdult = adult;
-    }
-
-    public class NextAiringEpisode{
-        private Date airingAt;
-        private Date timeUntilAiring;
-        private long timeUntilAiringEpoch;
-        private int episode;
-        private final SimpleDateFormat yearMonthDay = new SimpleDateFormat("yyyy-MM-dd hh:mm a");
-
-        public String getAiringAtString(){
-            return yearMonthDay.format(this.airingAt);
-        }
-
-        public Date getAiringAt() {
-            return airingAt;
-        }
-
-
-        public void setAiringAt(long airingAt) {
-            this.airingAt = new Date(airingAt * 1000);
-        }
-
-
-        public long getTimeUntilAiringEpoch() {
-            return timeUntilAiringEpoch;
-        }
-
-        public String getTimeUntilAiringString(){
-            SimpleDateFormat days = new SimpleDateFormat("d");
-            SimpleDateFormat hours = new SimpleDateFormat("H");
-            SimpleDateFormat minutes = new SimpleDateFormat("m");
-
-            // Calculate the precise day
-            int adjustedDays = Integer.parseInt(days.format(timeUntilAiring)) - 1;
-
-            // Final display
-            String timeUntilAiringStringText = "";
-
-            if(adjustedDays < 1){
-                timeUntilAiringStringText = String.format("%sh %sm", hours.format(timeUntilAiring),
-                        minutes.format(timeUntilAiring));
-            }
-            else{
-                timeUntilAiringStringText = String.format("%sd %sh %sm", adjustedDays,
-                        hours.format(timeUntilAiring),
-                        minutes.format(timeUntilAiring));
-            }
-
-            return timeUntilAiringStringText;
-        }
-
-        public Date getTimeUntilAiring() {
-            return timeUntilAiring;
-        }
-
-        public void setTimeUntilAiring(long timeUntilAiring) {
-            this.timeUntilAiring = new Date(timeUntilAiring * 1000);
-            this.timeUntilAiringEpoch = timeUntilAiring;
-        }
-
-        public int getEpisode() {
-            return episode;
-        }
-
-        public void setEpisode(int episode) {
-            this.episode = episode;
-        }
     }
 }
 

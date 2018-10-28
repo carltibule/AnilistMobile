@@ -1,6 +1,7 @@
-package ca.ctibule.anilistmobile;
+package ca.ctibule.anilistmobile.models;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class AiringEpisode {
     long airingAt;
@@ -38,19 +39,20 @@ public class AiringEpisode {
     }
 
     public static String getCountdownFormat(long epoch){
+        Date epochInDate = new Date(epoch * 1000);
         SimpleDateFormat days = new SimpleDateFormat("d");
         SimpleDateFormat hours = new SimpleDateFormat("H");
         SimpleDateFormat minutes = new SimpleDateFormat("m");
 
         // Calculate precise day, Anilist values seem to be 1 day behind the actual epoch time given by the API
-        int adjustedDays = Integer.parseInt(days.format(epoch)) - 1;
+        int adjustedDays = Integer.parseInt(days.format(epochInDate)) - 1;
 
         // Strip days out if adjustedDay is below 1
         if(adjustedDays < 1){
-            return String.format("%sh %sm", hours.format(epoch), minutes.format(epoch));
+            return String.format("%sh %sm", hours.format(epochInDate), minutes.format(epochInDate));
         }
         else{
-            return String.format("%sd %sh %sm", days.format(epoch), hours.format(epoch), minutes.format(epoch));
+            return String.format("%sd %sh %sm", adjustedDays, hours.format(epochInDate), minutes.format(epochInDate));
         }
     }
 }

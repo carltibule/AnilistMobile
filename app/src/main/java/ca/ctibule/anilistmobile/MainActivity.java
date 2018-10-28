@@ -8,12 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
@@ -27,8 +23,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 
 import ca.ctibule.AnilistMobile.MediaQuery;
-import ca.ctibule.AnilistMobile.type.CustomType;
 import ca.ctibule.AnilistMobile.type.MediaSeason;
+import ca.ctibule.anilistmobile.models.AnilistMedia;
 import okhttp3.OkHttpClient;
 
 public class MainActivity extends AppCompatActivity {

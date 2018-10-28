@@ -25,8 +25,6 @@ public class AnilistMedia {
     private boolean isLicensed;
     private String hashtag;
     private int updatedAt;
-    private int averageScore;
-    private int meanScore;
     private boolean isAdult;
 
     // Associated objects
@@ -34,9 +32,11 @@ public class AnilistMedia {
     public MediaTrailer trailer;
     public MediaImage image;
     public AiringEpisode nextAiringEpisode;
+    public MediaRanking mediaRanking;
 
     // Associated arrays
     private ArrayList<String> genres;
+    private ArrayList<String> tags;
 
     public AnilistMedia(){
         anilistId = 0;
@@ -55,8 +55,6 @@ public class AnilistMedia {
         isLicensed = false;
         hashtag = "";
         updatedAt = 0;
-        averageScore = 0;
-        meanScore = 0;
         isAdult = false;
 
         // Initialize associated models
@@ -64,9 +62,11 @@ public class AnilistMedia {
         trailer = new MediaTrailer();
         image = new MediaImage();
         nextAiringEpisode = new AiringEpisode();
+        mediaRanking = new MediaRanking();
 
         // Initialize associated arrays
         genres = new ArrayList<>();
+        tags = new ArrayList<>();
     }
 
     public int getAnilistId() {
@@ -206,22 +206,6 @@ public class AnilistMedia {
         this.updatedAt = updatedAt;
     }
 
-    public int getAverageScore() {
-        return averageScore;
-    }
-
-    public void setAverageScore(int averageScore) {
-        this.averageScore = averageScore;
-    }
-
-    public int getMeanScore() {
-        return meanScore;
-    }
-
-    public void setMeanScore(int meanScore) {
-        this.meanScore = meanScore;
-    }
-
     public boolean isAdult() {
         return isAdult;
     }
@@ -236,6 +220,14 @@ public class AnilistMedia {
 
     public void addGenre(String genre){
         this.genres.add(genre);
+    }
+
+    public ArrayList<String> getTags() {
+        return tags;
+    }
+
+    public void addTag(String tag){
+        this.tags.add(tag);
     }
 }
 

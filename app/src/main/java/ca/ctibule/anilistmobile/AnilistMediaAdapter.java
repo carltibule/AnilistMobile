@@ -100,7 +100,7 @@ public class AnilistMediaAdapter extends ArrayAdapter<AnilistMedia> {
                 String nextEpisodeLabel = "";
 
                 if(media.nextAiringEpisode.getTimeUntilAiringEpoch() == 0){
-                    nextEpisodeLabel = String.format("Airing at %s", media.getStartDate());
+                    nextEpisodeLabel = String.format("Airing on %s", media.getStartDate());
                 }
                 else{
                     nextEpisodeLabel = String.format("Episode %d airing in %s",

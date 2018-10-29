@@ -162,24 +162,6 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
             try{
-                CustomTypeAdapter<String> countryCodeAdapter = new CustomTypeAdapter<String>() {
-                    @Override
-                    public String decode(@NotNull CustomTypeValue value) {
-                        try {
-                            return value.value.toString();
-                        }
-                        catch (Exception e){
-                            throw e;
-                        }
-                    }
-
-                    @NotNull
-                    @Override
-                    public CustomTypeValue encode(@NotNull String value) {
-                        return new CustomTypeValue.GraphQLString(value);
-                    }
-                };
-
                 OkHttpClient okHttpClient = new OkHttpClient.Builder().build();
                 ApolloClient apolloClient = ApolloClient.builder().serverUrl(ANILIST_API_URL)
                         .okHttpClient(okHttpClient)

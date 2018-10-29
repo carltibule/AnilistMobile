@@ -1,6 +1,6 @@
 package ca.ctibule.anilistmobile.models;
 
-import ca.ctibule.AnilistMobile.MediaQueryByIdQuery;
+import ca.ctibule.AnilistMobile.MediaByIdQuery;
 
 public class MediaStreamingEpisode {
     private String title;

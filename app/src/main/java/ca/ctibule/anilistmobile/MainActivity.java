@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
@@ -26,6 +27,7 @@ import ca.ctibule.AnilistMobile.MediaQuery;
 import ca.ctibule.AnilistMobile.type.MediaSeason;
 import ca.ctibule.anilistmobile.models.AnilistMedia;
 import okhttp3.OkHttpClient;
+import android.content.Intent;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -206,6 +208,18 @@ public class MainActivity extends AppCompatActivity {
 
             AnilistMediaAdapter anilistMediaAdapter = new AnilistMediaAdapter(getOuter(), R.layout.lyt_media, mediaList);
             lstViewAnime.setAdapter(anilistMediaAdapter);
+
+            lstViewAnime.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent intent = new Intent();
+                    intent.putExtra("AnilistID", mediaList.get(position).getAnilistId());
+                    intent.setClass(getOuter(), MediaDetail.class);
+                    startActivity(intent);
+                }
+            });
         }
     }
+
+
 }

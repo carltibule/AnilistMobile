@@ -7,13 +7,6 @@
     android:orientation="vertical"
     tools:context=".MediaDetail">
 
-
-    <ProgressBar
-        android:id="@+id/media_detail_progress_bar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -22,8 +15,10 @@
             android:id="@+id/img_detail_cover_image"
             android:layout_width="150dp"
             android:layout_height="175dp"
-            tools:srcCompat="@tools:sample/avatars"
-            android:contentDescription="@string/cover_image_description"/>
+            android:contentDescription="@string/cover_image_description"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
             android:id="@+id/lbl_detail_title"
@@ -47,20 +42,5 @@
             app:layout_constraintTop_toBottomOf="@+id/lbl_detail_title" />
 
     </android.support.constraint.ConstraintLayout>
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/vpMediaDetailPager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <android.support.v4.view.PagerTabStrip
-            android:id="@+id/pager_header"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            android:paddingBottom="4dp"
-            android:paddingTop="4dp" />
-
-    </android.support.v4.view.ViewPager>
 
 </LinearLayout>

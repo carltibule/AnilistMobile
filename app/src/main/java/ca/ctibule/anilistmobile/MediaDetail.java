@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.apollographql.apollo.ApolloCall;
 import com.apollographql.apollo.ApolloClient;
@@ -21,25 +22,27 @@ import org.jetbrains.annotations.NotNull;
 import ca.ctibule.AnilistMobile.MediaByIdQuery;
 import ca.ctibule.AnilistMobile.type.CustomType;
 import ca.ctibule.anilistmobile.models.AnilistMedia;
+import ca.ctibule.anilistmobile.tasks.DownloadImageTask;
 import okhttp3.OkHttpClient;
 
 public class MediaDetail extends AppCompatActivity {
 
     private static final String ANILIST_API_URL= "https://graphql.anilist.co";
-    static AnilistMedia media;
+    private AnilistMedia media;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_media_detail);
 
+        media = new AnilistMedia();
+
         QueryAPIByIdTask queryAPIByIdTask = new QueryAPIByIdTask();
         queryAPIByIdTask.execute();
+
     }
 
     private void getMedia(ApolloClient apolloClient, int anilistId){
-        media = new AnilistMedia();
-
         // Query API using Id
         apolloClient.query(MediaByIdQuery.builder().id(anilistId).build()).enqueue(new ApolloCall.Callback<MediaByIdQuery.Data>() {
             @Override
@@ -68,6 +71,22 @@ public class MediaDetail extends AppCompatActivity {
 
                 if(mediaFromQuery.description() != null){
                     media.setDescription(mediaFromQuery.description());
+                }
+
+                if(mediaFromQuery.coverImage().extraLarge() != null){
+                    media.image.setExtraLargeCoverImage(mediaFromQuery.coverImage().extraLarge());
+                }
+
+                if(mediaFromQuery.coverImage().large() != null){
+                    media.image.setLargeCoverImage(mediaFromQuery.coverImage().large());
+                }
+
+                if(mediaFromQuery.coverImage().medium() != null){
+                    media.image.setMediumCoverImage(mediaFromQuery.coverImage().medium());
+                }
+
+                if(mediaFromQuery.bannerImage() != null){
+                    media.image.setBannerImage(mediaFromQuery.bannerImage());
                 }
             }
 
@@ -108,6 +127,9 @@ public class MediaDetail extends AppCompatActivity {
                 // Get anilist id
                 int anilistId = getIntent().getIntExtra("AnilistID", 0);
                 getMedia(apolloClient, anilistId);
+
+                // Pause
+                Thread.sleep(5000);
             }
             catch (Exception e){
                 e.printStackTrace();
@@ -118,9 +140,6 @@ public class MediaDetail extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            Log.d("GraphQL", media.title.getRomaji());
-            Log.d("GraphQL", media.title.getEnglish());
-
             ImageView imgDetailCoverImage = findViewById(R.id.img_detail_cover_image);
             TextView lblDetailTitle = findViewById(R.id.lbl_detail_title);
             TextView lblDetailDescription = findViewById(R.id.lbl_detail_description);
@@ -136,6 +155,19 @@ public class MediaDetail extends AppCompatActivity {
 
             if(lblDetailDescription != null){
                 lblDetailDescription.setText(media.getDescription());
+            }
+
+            if(imgDetailCoverImage != null){
+                String coverImageLink = null;
+
+                if(media.image.getMediumCoverImage() != null){
+                    coverImageLink = media.image.getMediumCoverImage();
+                }
+                else{
+                    coverImageLink = media.image.getLargeCoverImage();
+                }
+
+                new DownloadImageTask(imgDetailCoverImage).execute(coverImageLink);
             }
         }
     }

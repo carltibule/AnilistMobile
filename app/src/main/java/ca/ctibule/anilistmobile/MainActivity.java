@@ -173,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
                 while(hasNextPage){
                     page += 1;
                     getMediaFromAnilistAPI(apolloClient, 2018, MediaSeason.FALL, page);
-                    Thread.sleep(15000);
+                    Thread.sleep(3000);
                 }
             }
             catch (Exception e){

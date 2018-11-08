@@ -51,19 +51,22 @@
         app:layout_constraintTop_toBottomOf="@+id/img_detail_cover_image">
 
         <android.support.design.widget.TabItem
+            android:id="@+id/tabSummary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Left" />
+            android:text="@string/tabSummary" />
 
         <android.support.design.widget.TabItem
+            android:id="@+id/tabEpisodes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Center" />
+            android:text="@string/tabEpisodes" />
 
         <android.support.design.widget.TabItem
+            android:id="@+id/tabLinks"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Right" />
+            android:text="@string/tabLinks" />
     </android.support.design.widget.TabLayout>
 
     <android.support.v4.view.ViewPager

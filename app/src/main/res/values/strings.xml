@@ -8,5 +8,9 @@
 
     <string name="cover_image_description">Media cover image</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- MediaDetail activity -->
+    <string name="tabSummary">Summary</string>
+    <string name="tabEpisodes">Episodes</string>
+    <string name="tabLinks">Links</string>
 </resources>

@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
     private static final String ANILIST_API_URL= "https://graphql.anilist.co";
     private ArrayList<AnilistMedia> mediaList;
     private static boolean hasNextPage;
-    private DrawerLayout mDrawerLayout;
     ListView lstViewAnime;
     ProgressBar progressBar;
 
@@ -51,30 +50,10 @@ public class MainActivity extends AppCompatActivity {
 
         QueryAnilistAPITask queryAnilistAPITask = new QueryAnilistAPITask();
         queryAnilistAPITask.execute();
-
-        // Add toolbar
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
-
-        mDrawerLayout = findViewById(R.id.drawer_layout);
     }
 
     private MainActivity getOuter(){
         return MainActivity.this;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()){
-            case android.R.id.home:
-                mDrawerLayout.openDrawer(GravityCompat.START);
-                return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     private void getMediaFromAnilistAPI(ApolloClient apolloClient, int year, MediaSeason season, int page){

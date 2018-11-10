@@ -10,6 +10,9 @@
     <!-- TODO: Remove or change this placeholder text -->
 
     <!-- MediaDetailActivity activity -->
+    <string name="summary">Summary</string>
+    <string name="episodes">Episodes</string>
+    <string name="links">Links</string>
     <string name="tabSummary">Summary</string>
     <string name="tabEpisodes">Episodes</string>
     <string name="tabLinks">Links</string>

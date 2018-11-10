@@ -13,4 +13,7 @@
     <string name="tabSummary">Summary</string>
     <string name="tabEpisodes">Episodes</string>
     <string name="tabLinks">Links</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

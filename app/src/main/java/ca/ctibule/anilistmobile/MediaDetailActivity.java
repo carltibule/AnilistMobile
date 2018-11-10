@@ -27,7 +27,7 @@ import ca.ctibule.anilistmobile.models.AnilistMedia;
 import ca.ctibule.anilistmobile.tasks.DownloadImageTask;
 import okhttp3.OkHttpClient;
 
-public class MediaDetail extends AppCompatActivity {
+public class MediaDetailActivity extends AppCompatActivity {
 
     private static final String ANILIST_API_URL= "https://graphql.anilist.co";
     private AnilistMedia media;

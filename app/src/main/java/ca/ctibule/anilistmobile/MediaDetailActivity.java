@@ -41,6 +41,7 @@ EpisodesFragment.OnFragmentInteractionListener, ExternalLinksFragment.OnFragment
     private static final String ANILIST_API_URL= "https://graphql.anilist.co";
     private AnilistMedia media;
     private FragmentPagerAdapter adapterViewPager;
+    ProgressBar mediaDetailProgressBar;
 
     @Override
     public void onFragmentInteraction(Uri uri) {
@@ -53,16 +54,11 @@ EpisodesFragment.OnFragmentInteractionListener, ExternalLinksFragment.OnFragment
         setContentView(R.layout.activity_media_detail);
 
         media = new AnilistMedia();
+        mediaDetailProgressBar = findViewById(R.id.mediaDetailProgressBar);
 
         QueryAPIByIdTask queryAPIByIdTask = new QueryAPIByIdTask();
         queryAPIByIdTask.execute();
 
-        ViewPager viewPager = findViewById(R.id.viewPager);
-        adapterViewPager = new PagerAdapter(this, getSupportFragmentManager());
-        viewPager.setAdapter(adapterViewPager);
-
-        TabLayout tabLayout = findViewById(R.id.tabLayout);
-        tabLayout.setupWithViewPager(viewPager);
 
     }
 
@@ -71,6 +67,10 @@ EpisodesFragment.OnFragmentInteractionListener, ExternalLinksFragment.OnFragment
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.mnu_appbar, menu);
         return true;
+    }
+
+    private MediaDetailActivity getOuter(){
+        return this;
     }
 
     private void getMedia(ApolloClient apolloClient, int anilistId){
@@ -128,6 +128,12 @@ EpisodesFragment.OnFragmentInteractionListener, ExternalLinksFragment.OnFragment
         });
     }
     private class QueryAPIByIdTask extends AsyncTask<Void, Void, Void>{
+
+        @Override
+        protected void onPreExecute() {
+            mediaDetailProgressBar.setVisibility(View.VISIBLE);
+        }
+
         @Override
         protected Void doInBackground(Void... voids) {
             try{
@@ -171,6 +177,10 @@ EpisodesFragment.OnFragmentInteractionListener, ExternalLinksFragment.OnFragment
 
         @Override
         protected void onPostExecute(Void aVoid) {
+
+            //Remove progress bar
+            mediaDetailProgressBar.setVisibility(View.GONE);
+
             ImageView imgDetailCoverImage = findViewById(R.id.img_detail_cover_image);
             TextView lblDetailTitle = findViewById(R.id.lbl_detail_title);
             TextView lblDetailDescription = findViewById(R.id.lbl_detail_description);
@@ -200,6 +210,14 @@ EpisodesFragment.OnFragmentInteractionListener, ExternalLinksFragment.OnFragment
 
                 new DownloadImageTask(imgDetailCoverImage).execute(coverImageLink);
             }
+
+            // Load the rest of the UI
+            ViewPager viewPager = findViewById(R.id.viewPager);
+            adapterViewPager = new PagerAdapter(getOuter(), getSupportFragmentManager());
+            viewPager.setAdapter(adapterViewPager);
+
+            TabLayout tabLayout = findViewById(R.id.tabLayout);
+            tabLayout.setupWithViewPager(viewPager);
         }
     }
 

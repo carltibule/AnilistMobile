@@ -1,5 +1,8 @@
 package ca.ctibule.anilistmobile.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.jsoup.Jsoup;
 
 import java.util.ArrayList;
@@ -9,7 +12,7 @@ import ca.ctibule.AnilistMobile.type.MediaSeason;
 import ca.ctibule.AnilistMobile.type.MediaStatus;
 import ca.ctibule.AnilistMobile.type.MediaType;
 
-public class AnilistMedia {
+public class AnilistMedia implements Parcelable{
     private int anilistId;
     private int malId;
     private MediaType mediaType;
@@ -46,6 +49,7 @@ public class AnilistMedia {
     public AnilistMedia(){
         anilistId = 0;
         malId = 0;
+        mediaType = null;
         mediaFormat = null;
         mediaStatus = null;
         description = "";
@@ -74,6 +78,54 @@ public class AnilistMedia {
         tags = new ArrayList<>();
         externalLinks = new ArrayList<>();
         streamingEpisodes = new ArrayList<>();
+    }
+
+    public AnilistMedia(Parcel source){
+        anilistId = source.readInt();
+        malId = source.readInt();
+        description = source.readString();
+        startDate = source.readString();
+        endDate = source.readString();
+        episodes = source.readInt();
+        duration = source.readInt();
+        volumes = source.readInt();
+        chapters = source.readInt();
+        countryOfOrigin = source.readString();
+        isLicensed = (boolean)source.readValue(Boolean.class.getClassLoader());
+        hashtag = source.readString();
+        updatedAt = source.readInt();
+        isAdult = (boolean)source.readValue(boolean.class.getClassLoader());
+        siteUrl = source.readString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(anilistId);
+        dest.writeInt(malId);
+        dest.writeString(description);
+        dest.writeString(startDate);
+        dest.writeString(endDate);
+
+//        anilistId = source.readInt();
+//        malId = source.readInt();
+//        description = source.readString();
+//        startDate = source.readString();
+//        endDate = source.readString();
+//        episodes = source.readInt();
+//        duration = source.readInt();
+//        volumes = source.readInt();
+//        chapters = source.readInt();
+//        countryOfOrigin = source.readString();
+//        isLicensed = (boolean)source.readValue(Boolean.class.getClassLoader());
+//        hashtag = source.readString();
+//        updatedAt = source.readInt();
+//        isAdult = (boolean)source.readValue(boolean.class.getClassLoader());
+//        siteUrl = source.readString();
     }
 
     public int getAnilistId() {

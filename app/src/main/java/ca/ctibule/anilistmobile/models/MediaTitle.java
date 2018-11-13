@@ -2,7 +2,7 @@ package ca.ctibule.anilistmobile.models;
 
 import java.util.ArrayList;
 
-public class MediaTitle {
+public class MediaTitle{
     private String romaji;
     private String nativeLanguage;
     private String english;
@@ -14,6 +14,7 @@ public class MediaTitle {
         this.english = "";
         alternatives = new ArrayList<>();
     }
+
 
     public String getRomaji() {
         return romaji;

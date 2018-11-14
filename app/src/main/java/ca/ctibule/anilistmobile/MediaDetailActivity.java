@@ -88,6 +88,65 @@ EpisodesFragment.OnFragmentInteractionListener, ExternalLinksFragment.OnFragment
                     media.setMalId(mediaFromQuery.idMal());
                 }
 
+                // Get general information associated with the media
+                media.setMediaType(mediaFromQuery.type());
+                media.setMediaFormat(mediaFromQuery.format());
+                media.setMediaStatus(mediaFromQuery.status());
+                media.setMediaSeason(mediaFromQuery.season());
+
+                if(mediaFromQuery.description() != null){
+                    media.setDescription(mediaFromQuery.description());
+                }
+
+                if(mediaFromQuery.startDate().year() != null && mediaFromQuery.startDate().month() != null &&
+                        mediaFromQuery.startDate().day() != null){
+                    media.setStartDate(mediaFromQuery.startDate().year(), mediaFromQuery.startDate().month(),
+                            mediaFromQuery.startDate().day());
+                }
+
+                if(mediaFromQuery.endDate().year() != null && mediaFromQuery.endDate().month() != null &&
+                        mediaFromQuery.endDate().day() != null){
+                    media.setStartDate(mediaFromQuery.endDate().year(), mediaFromQuery.endDate().month(),
+                            mediaFromQuery.endDate().day());
+                }
+
+                if(mediaFromQuery.episodes() != null){
+                    media.setEpisodes(mediaFromQuery.episodes());
+                }
+
+                if(mediaFromQuery.volumes() != null){
+                    media.setVolumes(mediaFromQuery.volumes());
+                }
+
+                if(mediaFromQuery.chapters() != null){
+                    media.setChapters(mediaFromQuery.chapters());
+                }
+
+                if(mediaFromQuery.countryOfOrigin() != null){
+                    media.setCountryOfOrigin(mediaFromQuery.countryOfOrigin());
+                }
+
+                if(mediaFromQuery.isLicensed() != null){
+                    media.setLicensed(mediaFromQuery.isLicensed());
+                }
+
+                if(mediaFromQuery.hashtag() != null){
+                    media.setHashtag(mediaFromQuery.hashtag());
+                }
+
+                if(mediaFromQuery.updatedAt() != null){
+                    media.setUpdatedAt(mediaFromQuery.updatedAt());
+                }
+
+                if(mediaFromQuery.isAdult() != null){
+                    media.setAdult(mediaFromQuery.isAdult());
+                }
+
+                if(mediaFromQuery.siteUrl() != null){
+                    media.setSiteUrl(mediaFromQuery.siteUrl());
+                }
+
+                // Retrieve the titles associated with the media
                 if(mediaFromQuery.title().romaji() != null){
                     media.title.setRomaji(mediaFromQuery.title().romaji());
                 }
@@ -100,10 +159,7 @@ EpisodesFragment.OnFragmentInteractionListener, ExternalLinksFragment.OnFragment
                     media.title.setNativeLanguage(mediaFromQuery.title().native_());
                 }
 
-                if(mediaFromQuery.description() != null){
-                    media.setDescription(mediaFromQuery.description());
-                }
-
+                // Retrieve the images associated with the media
                 if(mediaFromQuery.coverImage().extraLarge() != null){
                     media.image.setExtraLargeCoverImage(mediaFromQuery.coverImage().extraLarge());
                 }
@@ -211,23 +267,29 @@ EpisodesFragment.OnFragmentInteractionListener, ExternalLinksFragment.OnFragment
                 new DownloadImageTask(imgDetailCoverImage).execute(coverImageLink);
             }
 
+            // Send the object to fragment
+
             // Load the rest of the UI
             ViewPager viewPager = findViewById(R.id.viewPager);
-            adapterViewPager = new PagerAdapter(getOuter(), getSupportFragmentManager());
+            adapterViewPager = new PagerAdapter(getOuter(), getSupportFragmentManager(), media);
             viewPager.setAdapter(adapterViewPager);
 
             TabLayout tabLayout = findViewById(R.id.tabLayout);
             tabLayout.setupWithViewPager(viewPager);
+
+
         }
     }
 
     public static class PagerAdapter extends FragmentPagerAdapter{
         private static int NUM_ITEMS = 3;
         private Context context;
+        private AnilistMedia media;
 
-        public PagerAdapter(Context context, FragmentManager fragmentManager){
+        public PagerAdapter(Context context, FragmentManager fragmentManager, AnilistMedia media){
             super(fragmentManager);
             this.context = context;
+            this.media = media;
         }
 
         @Override
@@ -239,7 +301,11 @@ EpisodesFragment.OnFragmentInteractionListener, ExternalLinksFragment.OnFragment
         public Fragment getItem(int i) {
             switch(i){
                 case 0:
-                    return new MediaDetailSummaryFragment();
+                    MediaDetailSummaryFragment mediaDetailSummaryFragment = new MediaDetailSummaryFragment();
+                    Bundle detailsBundle = new Bundle();
+                    detailsBundle.putParcelable("media", media);
+                    mediaDetailSummaryFragment.setArguments(detailsBundle);
+                    return mediaDetailSummaryFragment;
                 case 1:
                     return new EpisodesFragment();
                 case 2:

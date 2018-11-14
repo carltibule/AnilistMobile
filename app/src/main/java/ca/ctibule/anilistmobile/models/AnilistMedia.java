@@ -83,6 +83,10 @@ public class AnilistMedia implements Parcelable{
     public AnilistMedia(Parcel source){
         anilistId = source.readInt();
         malId = source.readInt();
+        mediaType = MediaType.valueOf(source.readString());
+        mediaFormat = MediaFormat.valueOf(source.readString());
+        mediaStatus = MediaStatus.valueOf(source.readString());
+        mediaSeason = MediaSeason.valueOf(source.readString());
         description = source.readString();
         startDate = source.readString();
         endDate = source.readString();
@@ -107,26 +111,36 @@ public class AnilistMedia implements Parcelable{
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(anilistId);
         dest.writeInt(malId);
+        dest.writeString(mediaType.name());
+        dest.writeString(mediaFormat.name());
+        dest.writeString(mediaStatus.name());
+        dest.writeString(mediaSeason.name());
         dest.writeString(description);
         dest.writeString(startDate);
         dest.writeString(endDate);
-
-//        anilistId = source.readInt();
-//        malId = source.readInt();
-//        description = source.readString();
-//        startDate = source.readString();
-//        endDate = source.readString();
-//        episodes = source.readInt();
-//        duration = source.readInt();
-//        volumes = source.readInt();
-//        chapters = source.readInt();
-//        countryOfOrigin = source.readString();
-//        isLicensed = (boolean)source.readValue(Boolean.class.getClassLoader());
-//        hashtag = source.readString();
-//        updatedAt = source.readInt();
-//        isAdult = (boolean)source.readValue(boolean.class.getClassLoader());
-//        siteUrl = source.readString();
+        dest.writeInt(episodes);
+        dest.writeInt(duration);
+        dest.writeInt(volumes);
+        dest.writeInt(chapters);
+        dest.writeString(countryOfOrigin);
+        dest.writeValue(isLicensed);
+        dest.writeString(hashtag);
+        dest.writeInt(updatedAt);
+        dest.writeValue(isAdult);
+        dest.writeString(siteUrl);
     }
+
+    public static final Creator<AnilistMedia> CREATOR = new Creator<AnilistMedia>() {
+        @Override
+        public AnilistMedia createFromParcel(Parcel source) {
+            return new AnilistMedia(source);
+        }
+
+        @Override
+        public AnilistMedia[] newArray(int size) {
+            return new AnilistMedia[size];
+        }
+    };
 
     public int getAnilistId() {
         return anilistId;

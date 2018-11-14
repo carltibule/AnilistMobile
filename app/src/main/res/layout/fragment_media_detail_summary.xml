@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/media_detail_summary_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context=".MediaDetailSummaryFragment">
@@ -40,7 +41,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="romaji_title"
             app:layout_constraintStart_toEndOf="@+id/textView5"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
 
@@ -60,7 +60,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="english_title"
             app:layout_constraintStart_toEndOf="@+id/textView7"
             app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
@@ -80,7 +79,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="native_title"
             app:layout_constraintStart_toEndOf="@+id/textView9"
             app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
@@ -100,7 +98,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
-            android:text="media_type"
             app:layout_constraintStart_toEndOf="@+id/textView11"
             app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
@@ -120,12 +117,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="fomat"
             app:layout_constraintStart_toEndOf="@+id/textView14"
             app:layout_constraintTop_toBottomOf="@+id/lbl_type" />
 
         <android.support.constraint.ConstraintLayout
-            android:id="@+id/grp_airing_status"
+            android:id="@+id/grp_anime_details"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -157,7 +153,6 @@
                 android:layout_height="19dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="YYYY-MM-DD"
                 app:layout_constraintStart_toEndOf="@+id/textView17"
                 app:layout_constraintTop_toBottomOf="@+id/textView21" />
 
@@ -177,7 +172,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="YYYY-MM-DD"
                 app:layout_constraintStart_toEndOf="@+id/textView19"
                 app:layout_constraintTop_toBottomOf="@+id/textView17" />
 
@@ -197,7 +191,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="airing_season"
                 app:layout_constraintStart_toEndOf="@+id/textView21"
                 app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
@@ -217,7 +210,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="XX episodes x XX mins."
                 app:layout_constraintStart_toEndOf="@+id/textView10"
                 app:layout_constraintTop_toBottomOf="@+id/lbl_end_date" />
 
@@ -230,7 +222,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/grp_airing_status">
+            app:layout_constraintTop_toBottomOf="@id/grp_anime_details">
 
             <TextView
                 android:id="@+id/textView2"
@@ -297,7 +289,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="JP"
             app:layout_constraintStart_toEndOf="@+id/textView13"
             app:layout_constraintTop_toBottomOf="@+id/lbl_format" />
 
@@ -317,7 +308,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="Yes"
             app:layout_constraintStart_toEndOf="@+id/textView18"
             app:layout_constraintTop_toBottomOf="@+id/lbl_country" />
 
@@ -327,7 +317,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="No"
             app:layout_constraintStart_toEndOf="@+id/textView30"
             app:layout_constraintTop_toBottomOf="@+id/lbl_is_licensed" />
 
@@ -337,7 +326,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="#hashtag"
             app:layout_constraintStart_toEndOf="@+id/textView29"
             app:layout_constraintTop_toBottomOf="@+id/lbl_is_adult" />
 
@@ -357,7 +345,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="https://www.anilist.co/link"
             app:layout_constraintStart_toEndOf="@+id/textView26"
             app:layout_constraintTop_toBottomOf="@+id/lbl_hashtag" />
 

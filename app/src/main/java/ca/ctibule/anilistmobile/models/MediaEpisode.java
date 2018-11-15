@@ -3,15 +3,24 @@ package ca.ctibule.anilistmobile.models;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class AiringEpisode {
-    long airingAt;
-    long timeUntilAiring;
-    int episode;
+public class MediaEpisode {
+    private long airingAt;
+    private long timeUntilAiring;
+    private int episode;
+    private String title;
+    private String thumbnail;
+    private String url;
+    private String site;
 
-    public AiringEpisode(){
+    public MediaEpisode(){
         this.airingAt = 0;
         this.timeUntilAiring = 0;
         this.episode = 0;
+        this.title = "";
+        this.thumbnail = "";
+        this.url = "";
+        this.site = "";
+
     }
 
     public long getAiringAt() {
@@ -54,5 +63,37 @@ public class AiringEpisode {
         else{
             return String.format("%sd %sh %sm", adjustedDays, hours.format(epochInDate), minutes.format(epochInDate));
         }
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getSite() {
+        return site;
+    }
+
+    public void setSite(String site) {
+        this.site = site;
     }
 }

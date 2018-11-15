@@ -11,7 +11,7 @@
 
     <!-- MediaDetailActivity activity -->
     <string name="summary">Summary</string>
-    <string name="episodes">Episodes</string>
+    <string name="episodeCount">Episodes</string>
     <string name="links">Links</string>
     <string name="tabSummary">Summary</string>
     <string name="tabEpisodes">Episodes</string>

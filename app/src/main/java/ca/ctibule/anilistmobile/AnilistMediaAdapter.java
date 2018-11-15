@@ -1,9 +1,6 @@
 package ca.ctibule.anilistmobile;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -13,12 +10,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.InputStream;
-import java.net.URL;
 import java.util.ArrayList;
 
-import ca.ctibule.anilistmobile.models.AiringEpisode;
 import ca.ctibule.anilistmobile.models.AnilistMedia;
+import ca.ctibule.anilistmobile.models.MediaEpisode;
 import ca.ctibule.anilistmobile.tasks.DownloadImageTask;
 
 public class AnilistMediaAdapter extends ArrayAdapter<AnilistMedia> {
@@ -83,11 +78,11 @@ public class AnilistMediaAdapter extends ArrayAdapter<AnilistMedia> {
                 String episodeCount = "";
                 String duration = "";
 
-                if(media.getEpisodes() < 1){
+                if(media.getEpisodeCount() < 1){
                     episodeCount = "?";
                 }
                 else{
-                    episodeCount = String.valueOf(media.getEpisodes());
+                    episodeCount = String.valueOf(media.getEpisodeCount());
                 }
 
                 if(media.getDuration() < 1){
@@ -109,7 +104,7 @@ public class AnilistMediaAdapter extends ArrayAdapter<AnilistMedia> {
                 else{
                     nextEpisodeLabel = String.format("Episode %d airing in %s",
                             media.nextAiringEpisode.getEpisode(),
-                            AiringEpisode.getCountdownFormat(media.nextAiringEpisode.getTimeUntilAiring()));
+                            MediaEpisode.getCountdownFormat(media.nextAiringEpisode.getTimeUntilAiring()));
                 }
 
                 lblNextEpisode.setText(nextEpisodeLabel);

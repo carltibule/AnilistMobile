@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     if(medium.episodes() != null){
-                        anilistMedia.setEpisodes(medium.episodes());
+                        anilistMedia.setEpisodeCount(medium.episodes());
                     }
 
                     if(medium.duration() != null){

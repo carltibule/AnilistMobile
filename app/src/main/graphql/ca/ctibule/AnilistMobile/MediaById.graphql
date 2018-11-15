@@ -66,6 +66,13 @@ query MediaById($id: Int!){
             url
             site
         }
+        airingSchedule{
+            nodes{
+                airingAt
+                timeUntilAiring
+                episode
+            }
+        }
         rankings {
             rank
             context

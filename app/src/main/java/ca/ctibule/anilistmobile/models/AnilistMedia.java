@@ -22,7 +22,7 @@ public class AnilistMedia implements Parcelable{
     private String startDate;
     private String endDate;
     private MediaSeason mediaSeason;
-    private int episodes;
+    private int episodeCount;
     private int duration;
     private int chapters;
     private int volumes;
@@ -37,14 +37,14 @@ public class AnilistMedia implements Parcelable{
     public MediaTitle title;
     public MediaTrailer trailer;
     public MediaImage image;
-    public AiringEpisode nextAiringEpisode;
+    public MediaEpisode nextAiringEpisode;
     public MediaRanking mediaRanking;
 
     // Associated arrays
     private ArrayList<String> genres;
     private ArrayList<String> tags;
     private ArrayList<MediaExternalLink> externalLinks;
-    private ArrayList<MediaStreamingEpisode> streamingEpisodes;
+    private ArrayList<MediaEpisode> episodes;
 
     public AnilistMedia(){
         anilistId = 0;
@@ -56,7 +56,7 @@ public class AnilistMedia implements Parcelable{
         startDate = "";
         endDate = "";
         mediaSeason = null;
-        episodes = 0;
+        episodeCount = 0;
         duration = 0;
         chapters = 0;
         volumes = 0;
@@ -70,14 +70,14 @@ public class AnilistMedia implements Parcelable{
         title = new MediaTitle();
         trailer = new MediaTrailer();
         image = new MediaImage();
-        nextAiringEpisode = new AiringEpisode();
+        nextAiringEpisode = new MediaEpisode();
         mediaRanking = new MediaRanking();
 
         // Initialize associated arrays
         genres = new ArrayList<>();
         tags = new ArrayList<>();
         externalLinks = new ArrayList<>();
-        streamingEpisodes = new ArrayList<>();
+        episodes = new ArrayList<>();
     }
 
     public AnilistMedia(Parcel source){
@@ -90,7 +90,7 @@ public class AnilistMedia implements Parcelable{
         description = source.readString();
         startDate = source.readString();
         endDate = source.readString();
-        episodes = source.readInt();
+        episodeCount = source.readInt();
         duration = source.readInt();
         volumes = source.readInt();
         chapters = source.readInt();
@@ -118,7 +118,7 @@ public class AnilistMedia implements Parcelable{
         dest.writeString(description);
         dest.writeString(startDate);
         dest.writeString(endDate);
-        dest.writeInt(episodes);
+        dest.writeInt(episodeCount);
         dest.writeInt(duration);
         dest.writeInt(volumes);
         dest.writeInt(chapters);
@@ -223,12 +223,12 @@ public class AnilistMedia implements Parcelable{
         this.mediaSeason = mediaSeason;
     }
 
-    public int getEpisodes() {
-        return episodes;
+    public int getEpisodeCount() {
+        return episodeCount;
     }
 
-    public void setEpisodes(int episodes) {
-        this.episodes = episodes;
+    public void setEpisodeCount(int episodeCount) {
+        this.episodeCount = episodeCount;
     }
 
     public int getDuration() {
@@ -327,12 +327,12 @@ public class AnilistMedia implements Parcelable{
         this.externalLinks.add(externalLink);
     }
 
-    public ArrayList<MediaStreamingEpisode> getStreamingEpisodes() {
-        return streamingEpisodes;
+    public ArrayList<MediaEpisode> getEpisodes() {
+        return episodes;
     }
 
-    public void addStreamingEpisode(MediaStreamingEpisode mediaStreamingEpisode){
-        this.streamingEpisodes.add(mediaStreamingEpisode);
+    public void addMediaEpisode(MediaEpisode mediaEpisode){
+        this.episodes.add(mediaEpisode);
     }
 }
 

@@ -152,7 +152,7 @@ public class MediaDetailSummaryFragment extends Fragment {
             }
 
             if(lblEpisodesAndDuration != null){
-                int episodeCount = media.getEpisodes();
+                int episodeCount = media.getEpisodeCount();
                 int duration = media.getDuration();
 
                 if(episodeCount == 0 && duration == 0){
@@ -165,7 +165,7 @@ public class MediaDetailSummaryFragment extends Fragment {
                     lblEpisodesAndDuration.setText(String.format("%d eps.", episodeCount));
                 }
                 else {
-                    lblEpisodesAndDuration.setText(String.format("%s eps. x %d mins.", media.getEpisodes(), media.getDuration()));
+                    lblEpisodesAndDuration.setText(String.format("%s eps. x %d mins.", media.getEpisodeCount(), media.getDuration()));
                 }
             }
         }

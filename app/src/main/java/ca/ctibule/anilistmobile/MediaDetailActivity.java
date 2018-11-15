@@ -11,14 +11,12 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.apollographql.apollo.ApolloCall;
 import com.apollographql.apollo.ApolloClient;
@@ -111,7 +109,7 @@ EpisodesFragment.OnFragmentInteractionListener, ExternalLinksFragment.OnFragment
                 }
 
                 if(mediaFromQuery.episodes() != null){
-                    media.setEpisodes(mediaFromQuery.episodes());
+                    media.setEpisodeCount(mediaFromQuery.episodes());
                 }
 
                 if(mediaFromQuery.volumes() != null){
@@ -322,7 +320,7 @@ EpisodesFragment.OnFragmentInteractionListener, ExternalLinksFragment.OnFragment
                 case 0:
                     return context.getString(R.string.summary);
                 case 1:
-                    return context.getString(R.string.episodes);
+                    return context.getString(R.string.episodeCount);
                 case 2:
                     return context.getString(R.string.links);
                 default:

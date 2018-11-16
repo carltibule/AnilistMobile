@@ -33,6 +33,7 @@ import ca.ctibule.AnilistMobile.MediaByIdQuery;
 import ca.ctibule.AnilistMobile.type.CustomType;
 import ca.ctibule.anilistmobile.models.AnilistMedia;
 import ca.ctibule.anilistmobile.models.MediaEpisode;
+import ca.ctibule.anilistmobile.models.MediaExternalLink;
 import ca.ctibule.anilistmobile.tasks.DownloadImageTask;
 import okhttp3.OkHttpClient;
 
@@ -229,6 +230,15 @@ EpisodesFragment.OnFragmentInteractionListener, ExternalLinksFragment.OnFragment
                             media.addMediaEpisode(episode);
                         }
                     }
+
+                    // Check if there's external links for this media
+                    if(mediaFromQuery.externalLinks() != null){
+                        for(MediaByIdQuery.ExternalLink link : mediaFromQuery.externalLinks()){
+                            MediaExternalLink externalLink = new MediaExternalLink();
+                            externalLink.setSite(link.site());
+                            externalLink.setUrl(link.url());
+                        }
+                    }
                 }
             }
 
@@ -368,7 +378,11 @@ EpisodesFragment.OnFragmentInteractionListener, ExternalLinksFragment.OnFragment
                     episodesFragment.setArguments(episodesBundle);
                     return episodesFragment;
                 case 2:
-                    return new ExternalLinksFragment();
+                    ExternalLinksFragment externalLinksFragment = new ExternalLinksFragment();
+                    Bundle externalLinksBundle = new Bundle();
+                    externalLinksBundle.putParcelableArrayList("externalLinks", media.getExternalLinks());
+                    externalLinksFragment.setArguments(externalLinksBundle);
+                    return externalLinksFragment;
                 default:
                     return null;
             }

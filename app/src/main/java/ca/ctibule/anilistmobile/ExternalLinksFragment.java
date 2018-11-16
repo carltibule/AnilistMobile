@@ -7,6 +7,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+
+import ca.ctibule.anilistmobile.models.MediaEpisode;
+import ca.ctibule.anilistmobile.models.MediaExternalLink;
 
 
 /**
@@ -27,6 +34,7 @@ public class ExternalLinksFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private ArrayList<MediaExternalLink> externalLinks;
     private OnFragmentInteractionListener mListener;
 
     public ExternalLinksFragment() {
@@ -64,7 +72,20 @@ public class ExternalLinksFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_external_links, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_external_links, container, false);
+
+        // Get relevant controls
+        TextView lblNoExternalLinks = rootView.findViewById(R.id.lbl_no_external_links);
+        ListView lstExternalLinks = rootView.findViewById(R.id.lst_external_links);
+
+        if(externalLinks != null || externalLinks.size() > 0){
+            lblNoExternalLinks.setVisibility(View.GONE);
+            lstExternalLinks.setVisibility(View.VISIBLE);
+
+
+        }
+
+        return rootView;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

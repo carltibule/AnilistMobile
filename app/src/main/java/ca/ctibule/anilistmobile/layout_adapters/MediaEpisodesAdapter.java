@@ -18,11 +18,11 @@ import ca.ctibule.anilistmobile.R;
 import ca.ctibule.anilistmobile.models.MediaEpisode;
 import ca.ctibule.anilistmobile.tasks.DownloadImageTask;
 
-public class MediaEpisodeAdapter extends ArrayAdapter<MediaEpisode> {
+public class MediaEpisodesAdapter extends ArrayAdapter<MediaEpisode> {
 
     private ArrayList<MediaEpisode> mediaEpisodes = new ArrayList<>();
 
-    public MediaEpisodeAdapter(@NonNull Context context, int resource, @NonNull ArrayList<MediaEpisode> episodes){
+    public MediaEpisodesAdapter(@NonNull Context context, int resource, @NonNull ArrayList<MediaEpisode> episodes){
         super(context, resource, episodes);
         this.mediaEpisodes = episodes;
     }

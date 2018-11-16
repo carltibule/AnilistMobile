@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import ca.ctibule.anilistmobile.layout_adapters.MediaEpisodeAdapter;
+import ca.ctibule.anilistmobile.layout_adapters.MediaEpisodesAdapter;
 import ca.ctibule.anilistmobile.models.MediaEpisode;
 
 
@@ -84,7 +84,7 @@ public class EpisodesFragment extends Fragment {
             lblNoEpisodes.setVisibility(View.GONE);
             lstEpisodes.setVisibility(View.VISIBLE);
 
-            MediaEpisodeAdapter adapter = new MediaEpisodeAdapter(getActivity(), R.layout.lyt_media, mediaEpisodes);
+            MediaEpisodesAdapter adapter = new MediaEpisodesAdapter(getActivity(), R.layout.lyt_media, mediaEpisodes);
             lstEpisodes.setAdapter(adapter);
         }
 

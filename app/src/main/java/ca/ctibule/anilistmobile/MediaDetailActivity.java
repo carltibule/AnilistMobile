@@ -27,9 +27,12 @@ import com.apollographql.apollo.response.CustomTypeValue;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collections;
+
 import ca.ctibule.AnilistMobile.MediaByIdQuery;
 import ca.ctibule.AnilistMobile.type.CustomType;
 import ca.ctibule.anilistmobile.models.AnilistMedia;
+import ca.ctibule.anilistmobile.models.MediaEpisode;
 import ca.ctibule.anilistmobile.tasks.DownloadImageTask;
 import okhttp3.OkHttpClient;
 
@@ -173,6 +176,19 @@ EpisodesFragment.OnFragmentInteractionListener, ExternalLinksFragment.OnFragment
                 if(mediaFromQuery.bannerImage() != null){
                     media.image.setBannerImage(mediaFromQuery.bannerImage());
                 }
+
+                if(mediaFromQuery.streamingEpisodes() != null){
+                    for(MediaByIdQuery.StreamingEpisode streamingEpisode: mediaFromQuery.streamingEpisodes()){
+                        MediaEpisode episode = new MediaEpisode();
+
+                        episode.setTitle(streamingEpisode.title());
+                        episode.setUrl(streamingEpisode.url());
+                        episode.setThumbnail(streamingEpisode.thumbnail());
+                        episode.setSite(streamingEpisode.site());
+
+                        media.addMediaEpisode(episode);
+                    }
+                }
             }
 
             @Override
@@ -305,7 +321,11 @@ EpisodesFragment.OnFragmentInteractionListener, ExternalLinksFragment.OnFragment
                     mediaDetailSummaryFragment.setArguments(detailsBundle);
                     return mediaDetailSummaryFragment;
                 case 1:
-                    return new EpisodesFragment();
+                    EpisodesFragment episodesFragment = new EpisodesFragment();
+                    Bundle episodesBundle = new Bundle();
+                    episodesBundle.putParcelableArrayList("episodes", media.getEpisodes());
+                    episodesFragment.setArguments(episodesBundle);
+                    return episodesFragment;
                 case 2:
                     return new ExternalLinksFragment();
                 default:

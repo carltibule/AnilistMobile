@@ -1,4 +1,4 @@
-package ca.ctibule.anilistmobile;
+package ca.ctibule.anilistmobile.layout_adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import ca.ctibule.anilistmobile.R;
 import ca.ctibule.anilistmobile.models.AnilistMedia;
 import ca.ctibule.anilistmobile.models.MediaEpisode;
 import ca.ctibule.anilistmobile.tasks.DownloadImageTask;

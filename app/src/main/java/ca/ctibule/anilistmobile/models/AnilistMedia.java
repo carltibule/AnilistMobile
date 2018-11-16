@@ -100,6 +100,9 @@ public class AnilistMedia implements Parcelable{
         updatedAt = source.readInt();
         isAdult = (boolean)source.readValue(boolean.class.getClassLoader());
         siteUrl = source.readString();
+
+        // Parcelable ArrayList
+        episodes = source.readArrayList(ArrayList.class.getClassLoader());
     }
 
     @Override
@@ -128,6 +131,9 @@ public class AnilistMedia implements Parcelable{
         dest.writeInt(updatedAt);
         dest.writeValue(isAdult);
         dest.writeString(siteUrl);
+
+        // ArrayList
+        dest.writeList(episodes);
     }
 
     public static final Creator<AnilistMedia> CREATOR = new Creator<AnilistMedia>() {

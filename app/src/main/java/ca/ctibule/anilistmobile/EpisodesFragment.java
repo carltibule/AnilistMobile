@@ -7,6 +7,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+
+import ca.ctibule.anilistmobile.layout_adapters.MediaEpisodeAdapter;
+import ca.ctibule.anilistmobile.models.MediaEpisode;
 
 
 /**
@@ -27,6 +34,7 @@ public class EpisodesFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private ArrayList<MediaEpisode> mediaEpisodes;
     private OnFragmentInteractionListener mListener;
 
     public EpisodesFragment() {
@@ -58,13 +66,29 @@ public class EpisodesFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        this.mediaEpisodes = this.getArguments().getParcelableArrayList("episodes");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_episodes, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_episodes, container, false);
+
+        // Get relevant controls
+        TextView lblNoEpisodes = rootView.findViewById(R.id.lbl_no_episodes);
+        ListView lstEpisodes = rootView.findViewById(R.id.lst_episodes);
+
+        if(mediaEpisodes != null || mediaEpisodes.size() > 0){
+            lblNoEpisodes.setVisibility(View.GONE);
+            lstEpisodes.setVisibility(View.VISIBLE);
+
+            MediaEpisodeAdapter adapter = new MediaEpisodeAdapter(getActivity(), R.layout.lyt_media, mediaEpisodes);
+            lstEpisodes.setAdapter(adapter);
+        }
+
+        return rootView;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

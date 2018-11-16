@@ -1,9 +1,12 @@
 package ca.ctibule.anilistmobile.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class MediaEpisode {
+public class MediaEpisode implements Parcelable {
     private long airingAt;
     private long timeUntilAiring;
     private int episode;
@@ -22,6 +25,44 @@ public class MediaEpisode {
         this.site = "";
 
     }
+
+    public MediaEpisode(Parcel source){
+        airingAt = source.readLong();
+        timeUntilAiring = source.readLong();
+        episode = source.readInt();
+        title = source.readString();
+        thumbnail = source.readString();
+        url = source.readString();
+        site = source.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(airingAt);
+        dest.writeLong(timeUntilAiring);
+        dest.writeInt(episode);
+        dest.writeString(title);
+        dest.writeString(thumbnail);
+        dest.writeString(url);
+        dest.writeString(site);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<MediaEpisode> CREATOR = new Creator<MediaEpisode>() {
+        @Override
+        public MediaEpisode createFromParcel(Parcel source) {
+            return new MediaEpisode(source);
+        }
+
+        @Override
+        public MediaEpisode[] newArray(int size) {
+            return new MediaEpisode[size];
+        }
+    };
 
     public long getAiringAt() {
         return airingAt;

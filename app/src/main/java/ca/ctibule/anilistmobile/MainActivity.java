@@ -21,6 +21,7 @@ import java.util.ArrayList;
 
 import ca.ctibule.AnilistMobile.MediaQuery;
 import ca.ctibule.AnilistMobile.type.MediaSeason;
+import ca.ctibule.anilistmobile.layout_adapters.AnilistMediaAdapter;
 import ca.ctibule.anilistmobile.models.AnilistMedia;
 import okhttp3.OkHttpClient;
 import android.content.Intent;

@@ -103,6 +103,7 @@ public class AnilistMedia implements Parcelable{
 
         // Parcelable ArrayList
         episodes = source.readArrayList(ArrayList.class.getClassLoader());
+        externalLinks = source.readArrayList(ArrayList.class.getClassLoader());
     }
 
     @Override
@@ -134,6 +135,7 @@ public class AnilistMedia implements Parcelable{
 
         // ArrayList
         dest.writeList(episodes);
+        dest.writeList(externalLinks);
     }
 
     public static final Creator<AnilistMedia> CREATOR = new Creator<AnilistMedia>() {

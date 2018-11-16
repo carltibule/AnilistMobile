@@ -333,7 +333,10 @@ public class AnilistMedia implements Parcelable{
         this.externalLinks.add(externalLink);
     }
 
-    public ArrayList<MediaEpisode> getEpisodes() {
+    public MediaEpisode getEpisode(int position){
+        return this.episodes.get(position);
+    }
+    public ArrayList<MediaEpisode> getEpisodeCollection() {
         return episodes;
     }
 

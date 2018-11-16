@@ -189,6 +189,47 @@ EpisodesFragment.OnFragmentInteractionListener, ExternalLinksFragment.OnFragment
                         media.addMediaEpisode(episode);
                     }
                 }
+
+                // Reverse the order of objects in the collection
+                Collections.reverse(media.getEpisodeCollection());
+
+                if(mediaFromQuery.airingSchedule().nodes() != null){
+                    for(MediaByIdQuery.Node node : mediaFromQuery.airingSchedule().nodes()){
+                        MediaEpisode episode;
+                        boolean isInCollection;
+
+                        // Check if the episode can be retrieved from the collection
+                        if(node.episode() - 1 >= media.getEpisodeCollection().size()){
+                            episode = new MediaEpisode();
+                            isInCollection = false;
+                        }
+                        else{
+                            episode = media.getEpisode(node.episode() - 1);
+                            isInCollection = true;
+                        }
+
+                        // Add more attributes
+                        if(node.airingAt() != 0){
+                            episode.setAiringAt(node.airingAt());
+                        }
+
+                        if(node.timeUntilAiring() != 0){
+                            episode.setTimeUntilAiring(node.timeUntilAiring());
+                        }
+
+                        if(node.episode() != 0){
+                            episode.setEpisode(node.episode());
+                        }
+
+                        // Get the episode back in the collection
+                        if(isInCollection){
+                            media.getEpisodeCollection().set(node.episode() - 1, episode);
+                        }
+                        else{
+                            media.addMediaEpisode(episode);
+                        }
+                    }
+                }
             }
 
             @Override
@@ -323,7 +364,7 @@ EpisodesFragment.OnFragmentInteractionListener, ExternalLinksFragment.OnFragment
                 case 1:
                     EpisodesFragment episodesFragment = new EpisodesFragment();
                     Bundle episodesBundle = new Bundle();
-                    episodesBundle.putParcelableArrayList("episodes", media.getEpisodes());
+                    episodesBundle.putParcelableArrayList("episodes", media.getEpisodeCollection());
                     episodesFragment.setArguments(episodesBundle);
                     return episodesFragment;
                 case 2:

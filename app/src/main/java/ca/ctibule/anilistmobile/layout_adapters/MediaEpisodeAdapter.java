@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,7 @@ public class MediaEpisodeAdapter extends ArrayAdapter<MediaEpisode> {
             ImageView imgThumbnail = v.findViewById(R.id.img_thumbnail);
             TextView lblEpisodeTitle = v.findViewById(R.id.lbl_episode_title);
             TextView lblWatchOn = v.findViewById(R.id.lbl_watch_on);
+            TextView lblAiringDate = v.findViewById(R.id.lbl_airing_date);
 
             try{
                 if(imgThumbnail != null){
@@ -59,11 +61,24 @@ public class MediaEpisodeAdapter extends ArrayAdapter<MediaEpisode> {
             }
 
             if(lblEpisodeTitle != null){
-                lblEpisodeTitle.setText(episode.getTitle());
+                if(episode.getTitle() != ""){
+                    lblEpisodeTitle.setText(episode.getTitle());
+                }
+                else{
+                    lblEpisodeTitle.setText(String.format("Episode %s", episode.getEpisode()));
+                }
             }
 
             if(lblWatchOn != null){
-                lblWatchOn.setText("Watch on: " + episode.getSite());
+                if(episode.getSite() != "") {
+                    lblWatchOn.setText(String.format("Watch on: %s", episode.getSite()));
+                }
+            }
+
+            if(lblAiringDate != null){
+                if(episode.getAiringAt() != 0){
+                    lblAiringDate.setText(String.format("Airing Date: %d", episode.getAiringAt()));
+                }
             }
         }
 

@@ -1,9 +1,6 @@
-package ca.ctibule.anilistmobile;
+package ca.ctibule.anilistmobile.layout_adapters;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -13,9 +10,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.InputStream;
-import java.net.URL;
 import java.util.ArrayList;
+
+import ca.ctibule.anilistmobile.R;
+import ca.ctibule.anilistmobile.models.AnilistMedia;
+import ca.ctibule.anilistmobile.models.MediaEpisode;
+import ca.ctibule.anilistmobile.tasks.DownloadImageTask;
 
 public class AnilistMediaAdapter extends ArrayAdapter<AnilistMedia> {
     private ArrayList<AnilistMedia> anilistMedia = new ArrayList<AnilistMedia>();
@@ -48,11 +48,11 @@ public class AnilistMediaAdapter extends ArrayAdapter<AnilistMedia> {
                 try{
                     String imageLink = null;
 
-                    if(media.getMediumCoverImage() != null){
-                        imageLink = media.getMediumCoverImage();
+                    if(media.image.getMediumCoverImage() != null){
+                        imageLink = media.image.getMediumCoverImage();
                     }
                     else{
-                        imageLink = media.getLargeCoverImage();
+                        imageLink = media.image.getLargeCoverImage();
                     }
 
                     new DownloadImageTask(imgCoverImage).execute(imageLink);
@@ -63,11 +63,11 @@ public class AnilistMediaAdapter extends ArrayAdapter<AnilistMedia> {
             }
 
             if(lblTitle != null){
-                if(media.getRomajiTitle() != null){
-                    lblTitle.setText(media.getRomajiTitle());
+                if(media.title.getRomaji() != null){
+                    lblTitle.setText(media.title.getRomaji());
                 }
                 else{
-                    lblTitle.setText(media.getEnglishTitle());
+                    lblTitle.setText(media.title.getEnglish());
                 }
             }
 
@@ -79,11 +79,11 @@ public class AnilistMediaAdapter extends ArrayAdapter<AnilistMedia> {
                 String episodeCount = "";
                 String duration = "";
 
-                if(media.getEpisodes() < 1){
+                if(media.getEpisodeCount() < 1){
                     episodeCount = "?";
                 }
                 else{
-                    episodeCount = String.valueOf(media.getEpisodes());
+                    episodeCount = String.valueOf(media.getEpisodeCount());
                 }
 
                 if(media.getDuration() < 1){
@@ -99,13 +99,13 @@ public class AnilistMediaAdapter extends ArrayAdapter<AnilistMedia> {
             if(lblNextEpisode != null){
                 String nextEpisodeLabel = "";
 
-                if(media.nextAiringEpisode.getTimeUntilAiringEpoch() == 0){
+                if(media.nextAiringEpisode.getTimeUntilAiring() == 0){
                     nextEpisodeLabel = String.format("Airing on %s", media.getStartDate());
                 }
                 else{
                     nextEpisodeLabel = String.format("Episode %d airing in %s",
                             media.nextAiringEpisode.getEpisode(),
-                            media.nextAiringEpisode.getTimeUntilAiringString());
+                            MediaEpisode.getCountdownFormat(media.nextAiringEpisode.getTimeUntilAiring()));
                 }
 
                 lblNextEpisode.setText(nextEpisodeLabel);
@@ -113,34 +113,5 @@ public class AnilistMediaAdapter extends ArrayAdapter<AnilistMedia> {
         }
 
         return v;
-    }
-
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap>{
-        ImageView imgCoverImage;
-
-        public DownloadImageTask(ImageView imgCoverImage){
-            this.imgCoverImage = imgCoverImage;
-        }
-
-        @Override
-        protected Bitmap doInBackground(String... strings) {
-            String urlDisplay = strings[0];
-            Bitmap mIcon11 = null;
-
-            try{
-                InputStream inputStream = new URL(urlDisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(inputStream);
-            }
-            catch (Exception e){
-                e.printStackTrace();
-            }
-
-            return mIcon11;
-        }
-
-        @Override
-        protected void onPostExecute(Bitmap bitmap) {
-            imgCoverImage.setImageBitmap(bitmap);
-        }
     }
 }

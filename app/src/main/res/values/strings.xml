@@ -5,4 +5,18 @@
     <string name="mnu_browse_mangas">Browse mangas</string>
     <string name="mnu_browse_news">Browse news</string>
     <string name="mnu_app_settings">Settings</string>
+
+    <string name="cover_image_description">Media cover image</string>
+    <!-- TODO: Remove or change this placeholder text -->
+
+    <!-- MediaDetailActivity activity -->
+    <string name="summary">Summary</string>
+    <string name="episodeCount">Episodes</string>
+    <string name="links">Links</string>
+    <string name="tabSummary">Summary</string>
+    <string name="tabEpisodes">Episodes</string>
+    <string name="tabLinks">Links</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

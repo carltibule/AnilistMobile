@@ -10,12 +10,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
 import ca.ctibule.anilistmobile.R;
-import ca.ctibule.anilistmobile.models.MediaEpisode;
 import ca.ctibule.anilistmobile.models.MediaExternalLink;
 
 public class MediaExternalLinksAdapter extends ArrayAdapter<MediaExternalLink> {
@@ -41,18 +38,29 @@ public class MediaExternalLinksAdapter extends ArrayAdapter<MediaExternalLink> {
         if(externalLink != null){
             ImageView imgLinkIcon = v.findViewById(R.id.img_link_icon);
             TextView lblSiteName = v.findViewById(R.id.lbl_site_name);
-            TextView lblLink = v.findViewById(R.id.lbl_link);
 
             if(imgLinkIcon != null){
-                imgLinkIcon.setImageResource(R.mipmap.internet_icon);
+
+                if(externalLink.getSite().equalsIgnoreCase("twitter")){
+                    imgLinkIcon.setImageResource(R.drawable.twitter);
+                }
+                else if(externalLink.getSite().equalsIgnoreCase("crunchyroll")){
+                    imgLinkIcon.setImageResource(R.drawable.crunchyroll);
+                }
+                else if(externalLink.getSite().equalsIgnoreCase("funimation")){
+                    imgLinkIcon.setImageResource(R.drawable.funimation);
+                }
+                else if(externalLink.getSite().equalsIgnoreCase("wakanim")){
+                    imgLinkIcon.setImageResource(R.drawable.wakanim);
+                }
+                else{
+                    imgLinkIcon.setImageResource(R.drawable.internet);
+                }
+
             }
 
             if(lblSiteName != null){
                 lblSiteName.setText(externalLink.getSite());
-            }
-
-            if(lblLink != null){
-                lblLink.setText(externalLink.getUrl());
             }
         }
 

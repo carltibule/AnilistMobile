@@ -7,13 +7,15 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import ca.ctibule.anilistmobile.models.MediaEpisode;
+import ca.ctibule.anilistmobile.layout_adapters.MediaExternalLinksAdapter;
 import ca.ctibule.anilistmobile.models.MediaExternalLink;
+import android.content.Intent;
 
 
 /**
@@ -66,6 +68,8 @@ public class ExternalLinksFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        this.externalLinks = this.getArguments().getParcelableArrayList("externalLinks");
     }
 
     @Override
@@ -82,6 +86,17 @@ public class ExternalLinksFragment extends Fragment {
             lblNoExternalLinks.setVisibility(View.GONE);
             lstExternalLinks.setVisibility(View.VISIBLE);
 
+            MediaExternalLinksAdapter adapter = new MediaExternalLinksAdapter(getActivity(), R.layout.lyt_external_links, externalLinks);
+            lstExternalLinks.setAdapter(adapter);
+
+            lstExternalLinks.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    String link = ((MediaExternalLink)parent.getItemAtPosition(position)).getUrl();
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
+                    startActivity(browserIntent);
+                }
+            });
 
         }
 

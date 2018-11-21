@@ -29,10 +29,8 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="backgroundLayerName" value="ic_launcher_background" />
-                                      <entry key="foregroundImage" value="D:\Users\cjtibule\Downloads\Android\wakanim.png" />
-                                      <entry key="foregroundLayerName" value="ic_launcher_foreground" />
-                                      <entry key="outputName" value="wakanim_icon" />
+                                      <entry key="foregroundImage" value="C:\Program Files\Android\Android Studio\plugins\android\lib\templates\gradle-projects\NewAndroidModule\root\res\mipmap-hdpi\ic_launcher.png" />
+                                      <entry key="foregroundLayerName" value="ic_launcher_layer" />
                                     </map>
                                   </option>
                                 </PersistentState>

@@ -237,6 +237,8 @@ EpisodesFragment.OnFragmentInteractionListener, ExternalLinksFragment.OnFragment
                             MediaExternalLink externalLink = new MediaExternalLink();
                             externalLink.setSite(link.site());
                             externalLink.setUrl(link.url());
+
+                            media.addExternalLink(externalLink);
                         }
                     }
                 }

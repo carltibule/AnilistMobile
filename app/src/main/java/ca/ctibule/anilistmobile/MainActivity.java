@@ -1,12 +1,16 @@
 package ca.ctibule.anilistmobile;
 
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -22,6 +26,7 @@ import java.util.ArrayList;
 import ca.ctibule.AnilistMobile.MediaQuery;
 import ca.ctibule.AnilistMobile.type.MediaSeason;
 import ca.ctibule.anilistmobile.layout_adapters.AnilistMediaAdapter;
+import ca.ctibule.anilistmobile.layout_adapters.MediaAdapter;
 import ca.ctibule.anilistmobile.models.AnilistMedia;
 import okhttp3.OkHttpClient;
 import android.content.Intent;
@@ -31,8 +36,11 @@ public class MainActivity extends AppCompatActivity {
     private static final String ANILIST_API_URL= "https://graphql.anilist.co";
     private ArrayList<AnilistMedia> mediaList;
     private static boolean hasNextPage;
-    ListView lstViewAnime;
     ProgressBar progressBar;
+
+    private RecyclerView lstMedia;
+    private RecyclerView.Adapter mediaAdapter;
+    private RecyclerView.LayoutManager layoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +50,9 @@ public class MainActivity extends AppCompatActivity {
         // Instantiate necesary variables;
         mediaList = new ArrayList<AnilistMedia>();
         hasNextPage = true;
-        lstViewAnime = findViewById(R.id.list_view_anime);
         progressBar = findViewById(R.id.progressBar);
+
+        lstMedia = findViewById(R.id.lst_media);
 
         QueryAnilistAPITask queryAnilistAPITask = new QueryAnilistAPITask();
         queryAnilistAPITask.execute();
@@ -171,18 +180,11 @@ public class MainActivity extends AppCompatActivity {
             //Remove progress bar
             progressBar.setVisibility(View.GONE);
 
-            AnilistMediaAdapter anilistMediaAdapter = new AnilistMediaAdapter(getOuter(), R.layout.lyt_media, mediaList);
-            lstViewAnime.setAdapter(anilistMediaAdapter);
+            layoutManager = new LinearLayoutManager(getOuter());
+            lstMedia.setLayoutManager(layoutManager);
 
-            lstViewAnime.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent intent = new Intent();
-                    intent.putExtra("AnilistID", mediaList.get(position).getAnilistId());
-                    intent.setClass(getOuter(), MediaDetailActivity.class);
-                    startActivity(intent);
-                }
-            });
+            mediaAdapter = new MediaAdapter(getOuter(), mediaList);
+            lstMedia.setAdapter(mediaAdapter);
         }
     }
 

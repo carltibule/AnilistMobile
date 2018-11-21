@@ -1,5 +1,6 @@
 package ca.ctibule.anilistmobile.layout_adapters;
 
+import android.arch.lifecycle.Observer;
 import android.content.Intent;
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -20,6 +21,7 @@ import ca.ctibule.anilistmobile.tasks.DownloadImageTask;
 
 public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.MediaViewHolder>{
     public class MediaViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        private int anilistMediaId;
         public ImageView imgCoverImage;
         public TextView lblTitle;
         public TextView lblNextEpisode;
@@ -40,9 +42,18 @@ public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.MediaViewHol
 
         @Override
         public void onClick(View v) {
-            if(onEntryClickListener != null){
-                onEntryClickListener.onEntryClick(v, getLayoutPosition());
-            }
+//            if(onEntryClickListener != null){
+//                onEntryClickListener.onEntryClick(v, getLayoutPosition());
+//            }
+
+            Intent intent = new Intent();
+            intent.putExtra("AnilistID", anilistMediaId);
+            intent.setClass(context, MediaDetailActivity.class);
+            context.startActivity(intent);
+        }
+
+        public void setAnilistMediaId(int anilistMediaId){
+            this.anilistMediaId = anilistMediaId;
         }
     }
 
@@ -69,6 +80,8 @@ public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.MediaViewHol
     @Override
     public void onBindViewHolder(@NonNull MediaViewHolder mediaViewHolder, int i) {
         AnilistMedia media = this.mediaCollection.get(i);
+
+        mediaViewHolder.setAnilistMediaId(media.getAnilistId());
 
         if(mediaViewHolder.imgCoverImage != null){
             String imageLink = null;

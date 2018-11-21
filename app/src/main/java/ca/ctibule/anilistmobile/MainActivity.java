@@ -185,6 +185,8 @@ public class MainActivity extends AppCompatActivity {
 
             mediaAdapter = new MediaAdapter(getOuter(), mediaList);
             lstMedia.setAdapter(mediaAdapter);
+
+
         }
     }
 
